@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plus rechnen bis 20</title>
+
+    <style>
+      body {
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+
+        background: #1f4d2b;
+        background-image: radial-gradient(
+            rgba(255, 255, 255, 0.03) 1px,
+            transparent 1px
+          ),
+          radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+        background-size: 4px 4px, 6px 6px;
+      }
+
+      #question {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 64px;
+        font-weight: bold;
+        padding: 25px 50px;
+        color: #f5f5f5;
+        border-radius: 10px;
+      }
+
+      .answer {
+        position: absolute;
+        padding: 15px 30px;
+        background: transparent;
+        border: 3px dashed rgba(255, 255, 255, 0.8);
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 36px;
+        font-weight: bold;
+        color: #ffffff;
+        text-shadow: 0 0 2px rgba(255, 255, 255, 0.7);
+        transition: transform 0.2s, opacity 0.2s;
+      }
+
+      .answer:hover {
+        transform: scale(1.15) rotate(-2deg);
+      }
+
+      .answer:active {
+        opacity: 0.6;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="question">?</div>
+
+    <script>
+      function generateQuestion() {
+        let a, b, sum;
+
+        do {
+          a = Math.floor(Math.random() * 21);
+          b = Math.floor(Math.random() * 21);
+          sum = a + b;
+        } while (sum > 20);
+
+        return {
+          questionText: `${a} + ${b}`,
+          solution: sum,
+        };
+      }
+
+      function placeButtonAwayFromQuestion(btn) {
+        const questionBox = document
+          .getElementById("question")
+          .getBoundingClientRect();
+        const bw = 80;
+        const bh = 80;
+
+        let x,
+          y,
+          safe = false;
+
+        const existingButtons = Array.from(
+          document.querySelectorAll(".answer")
+        ).map((b) => b.getBoundingClientRect());
+
+        while (!safe) {
+          x = Math.random() * (window.innerWidth - bw);
+          y = Math.random() * (window.innerHeight - bh);
+
+          const overlapQuestion =
+            x < questionBox.right &&
+            x + bw > questionBox.left &&
+            y < questionBox.bottom &&
+            y + bh > questionBox.top;
+
+          const overlapButton = existingButtons.some(
+            (b) =>
+              x < b.right && x + bw > b.left && y < b.bottom && y + bh > b.top
+          );
+
+          if (!overlapQuestion && !overlapButton) safe = true;
+        }
+
+        btn.style.left = x + "px";
+        btn.style.top = y + "px";
+      }
+
+      function startGame() {
+        document.querySelectorAll(".answer").forEach((e) => e.remove());
+
+        const data = generateQuestion();
+        const correct = data.solution;
+
+        document.getElementById("question").textContent =
+          data.questionText + " = ";
+
+        const answers = new Set([correct]);
+
+        while (answers.size < 5) {
+          answers.add(Math.floor(Math.random() * 21));
+        }
+
+        Array.from(answers)
+          .sort(() => Math.random() - 0.5)
+          .forEach((value) => {
+            const btn = document.createElement("button");
+            btn.className = "answer";
+            btn.textContent = value;
+
+            placeButtonAwayFromQuestion(btn);
+
+            btn.onclick = () => {
+              if (value === correct) {
+                startGame();
+              } else {
+                btn.remove();
+              }
+            };
+
+            document.body.appendChild(btn);
+          });
+      }
+
+      window.onload = startGame;
+    </script>
+  </body>
+</html>
