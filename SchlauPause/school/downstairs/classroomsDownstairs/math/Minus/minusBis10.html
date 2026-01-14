@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Minus rechnen bis 10</title>
+    <title>Minus rechnen im Zahlenraum bis 10</title>
 
     <style>
       body {
@@ -61,90 +61,149 @@
     <div id="question">?</div>
 
     <script>
-      function generateQuestion() {
-        const a = Math.floor(Math.random() * 11);
-        const b = Math.floor(Math.random() * (a + 1));
+      (function () {
+        const maxSum = 10;
+        const answerCount = 5;
+        const maxAllowedAttempts = 60;
 
-        return {
-          questionText: `${a} - ${b}`,
-          solution: a - b,
-        };
-      }
+        const getRandomInteger = (highestAllowedValue) =>
+          Math.floor(Math.random() * (highestAllowedValue + 1));
 
-      function placeButtonAwayFromQuestion(btn) {
-        const questionBox = document
-          .getElementById("question")
-          .getBoundingClientRect();
-        const bw = 80;
-        const bh = 80;
+        function generateQuestion() {
+          const a = getRandomInteger(maxSum);
+          const b = getRandomInteger(a);
+          return { questionText: `${a} - ${b}`, solution: a - b };
+        }
 
-        let x,
-          y,
-          safe = false;
-
-        const existingButtons = Array.from(
-          document.querySelectorAll(".answer")
-        ).map((b) => b.getBoundingClientRect());
-
-        while (!safe) {
-          x = Math.random() * (window.innerWidth - bw);
-          y = Math.random() * (window.innerHeight - bh);
-
-          const overlapQuestion =
-            x < questionBox.right &&
-            x + bw > questionBox.left &&
-            y < questionBox.bottom &&
-            y + bh > questionBox.top;
-
-          const overlapButton = existingButtons.some(
-            (b) =>
-              x < b.right && x + bw > b.left && y < b.bottom && y + bh > b.top
+        function checkAnswerOverlap(r1, r2) {
+          return (
+            r1.left < r2.right &&
+            r1.right > r2.left &&
+            r1.top < r2.bottom &&
+            r1.bottom > r2.top
           );
-
-          if (!overlapQuestion && !overlapButton) safe = true;
         }
 
-        btn.style.left = x + "px";
-        btn.style.top = y + "px";
-      }
+        function placeAnswersAwayFromQuestion(btn) {
+          const questionBox = document
+            .getElementById("question")
+            .getBoundingClientRect(); // Holen des Begrenzungsrechtecks der Frage
 
-      function startGame() {
-        document.querySelectorAll(".answer").forEach((e) => e.remove());
+          // Stelle sicher, dass das Element messbar ist (wird vor dem Aufruf angehängt)
+          btn.style.visibility = "hidden";
 
-        const data = generateQuestion();
-        const correct = data.solution;
+          const existingButtons = Array.from(
+            document.querySelectorAll(".answer") // Holen aller vorhandenen Antwort-Buttons
+          )
+            .filter((b) => b !== btn) // Ausschließen des aktuellen Buttons
+            .map((b) => b.getBoundingClientRect()); // getBoundingClientRect() gibt die Position und Größe eines Elements relativ zum Ansichtsfenster zurück
 
-        document.getElementById("question").textContent =
-          data.questionText + " = ";
+          const buttonWidth =
+            btn.offsetWidth || btn.getBoundingClientRect().width || 80;
+          const buttonHeight =
+            btn.offsetHeight || btn.getBoundingClientRect().height || 80;
 
-        const answers = new Set([correct]);
+          const maxX = Math.max(window.innerWidth - buttonWidth, 0); // 0 bedeutet, dass der Button nicht größer als das Fenster sein darf - wenn ich hier 10 nehme, dann kann der Button 10 Pixel links und rechts über den Rand hinausragen
+          const maxY = Math.max(window.innerHeight - buttonHeight, 0);
 
-        while (answers.size < 5) {
-          answers.add(Math.floor(Math.random() * 11));
+          let x = 0,
+            y = 0,
+            attempt = 0;
+
+          while (attempt++ < maxAllowedAttempts) {
+            x = Math.random() * maxX;
+            y = Math.random() * maxY;
+            const potentialSolution = {
+              left: x,
+              right: x + buttonWidth, //damit der Button nicht zu weit rechts ist
+              top: y,
+              bottom: y + buttonHeight,
+            }; //
+
+            const overlapQuestion = checkAnswerOverlap(
+              potentialSolution,
+              questionBox
+            );
+            const overlapButton = existingButtons.some(
+              (
+                b //.some prüft, ob mindestens ein Element im Array die Bedingung erfüllt, in diesem Fall ob es überlappt, alternativ könnte man auch .find verwenden. Der Unterschied ist, dass .some einen booleschen Wert zurückgibt (true/false), während .find das erste Element zurückgibt, das die Bedingung erfüllt, oder undefined, wenn kein solches Element gefunden wird.
+              ) => checkAnswerOverlap(potentialSolution, b) // prüft Überlappung mit jedem vorhandenen Button
+            );
+
+            if (!overlapQuestion && !overlapButton) break;
+          }
+
+          // Fallback: klemmt die Position ins sichtbare Fenster d.h. wenn nach maxAllowedAttempts keine passende Position gefunden wurde, wird der Button irgendwo im sichtbaren Bereich platziert:
+          x = Math.min(Math.max(0, x), maxX);
+          y = Math.min(Math.max(0, y), maxY);
+
+          btn.style.left = x + "px";
+          btn.style.top = y + "px";
+          btn.style.visibility = "";
         }
 
-        Array.from(answers)
-          .sort(() => Math.random() - 0.5)
-          .forEach((value) => {
+        function shuffle(array) {
+          //hier wird das Array mit den potentiellen Antworten gemischt
+          for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+          }
+        }
+
+        function startGame() {
+          document.querySelectorAll(".answer").forEach((e) => e.remove());
+
+          const data = generateQuestion();
+          const correct = data.solution;
+
+          document.getElementById("question").textContent =
+            data.questionText + " = ";
+
+          const answers = new Set([correct]); // Set speichert nur eindeutige Werte, hier wird die korrekte Antwort als erstes hinzugefügt
+
+          while (answers.size < answerCount) {
+            answers.add(getRandomInteger(maxSum));
+          } // Solange bis die gewünschte Anzahl an Antworten erreicht ist, werden zufällige Zahlen hinzugefügt
+
+          const shuffledAnswers = Array.from(answers); // Konvertiert das Set in ein Array
+          shuffle(shuffledAnswers);
+
+          shuffledAnswers.forEach((value) => {
+            // Für jede Antwort wird ein Button erstellt
             const btn = document.createElement("button");
             btn.className = "answer";
             btn.textContent = value;
 
-            placeButtonAwayFromQuestion(btn);
+            placeAnswersAwayFromQuestion(btn);
 
             btn.onclick = () => {
               if (value === correct) {
-                startGame();
+                btn.style.borderColor = "lime";
+                btn.style.transition = " border 0.3s ease";
+                setTimeout(() => {
+                  document.getElementById("question").textContent =
+                    data.questionText + " = " + correct;
+                }, 200);
+
+                setTimeout(() => {
+                  startGame();
+                }, 1000);
               } else {
-                btn.remove();
+                btn.style.borderColor = "red";
+                btn.style.transition = " border 0.3s ease";
+
+                setTimeout(() => {
+                  btn.remove();
+                }, 500);
               }
             };
 
             document.body.appendChild(btn);
           });
-      }
+        }
 
-      window.onload = startGame;
+        window.onload = startGame;
+      })();
     </script>
   </body>
 </html>
