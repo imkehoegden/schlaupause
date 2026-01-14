@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buchstabensalat</title>
+    <script src="buchstabensalat.js" defer></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 50px;
+      }
+      .salad-bowl {
+        width: 300px;
+        height: 300px;
+        /*border: #5bce5f 4px solid;*/
+        border-radius: 50%;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        /*background-color: #e0f7e9;*/
+      }
+
+      .salad-bowl .bowl-icon {
+        font-size: 250px;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .salad-bowl .salad-letters {
+        position: absolute;
+        inset: 16px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        z-index: 2;
+        pointer-events: auto;
+      }
+
+      .single-letter {
+        min-width: 40px;
+        height: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #ffffff;
+        border-radius: 50%;
+        border: 2px solid #5bce5f;
+        font-weight: bold;
+        font-size: 20px;
+        cursor: pointer;
+      }
+
+      .word-solution {
+        font-size: 25px;
+        margin-bottom: 30px;
+      }
+
+      #letter-1,
+      #letter-2,
+      #letter-3,
+      #letter-4,
+      #letter-5 {
+        display: inline-block;
+        width: 30px;
+        text-align: center;
+        border: 2px solid black;
+        border-radius: 5px;
+        margin: 0 5px;
+      }
+
+      #undo-btn {
+        padding: 10px 20px;
+        font-size: 18px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <h1>Buchstabensalat</h1>
+      <div class="salad-bowl">
+        <span class="bowl-icon">🥗</span>
+        <div class="salad-letters"></div>
+      </div>
+      <div class="word-solution">
+        <span id="letter-1">_</span><span id="letter-2">_</span
+        ><span id="letter-3">_</span><span id="letter-4">_</span
+        ><span id="letter-5">_</span>
+      </div>
+      <button id="undo-btn">⬅️</button>
+    </main>
+    <footer></footer>
+  </body>
+</html>
