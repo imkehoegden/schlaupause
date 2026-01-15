@@ -11,32 +11,37 @@
         margin: 0;
         padding: 0;
       }
+
       main {
         display: flex;
         flex-direction: column;
         align-items: center;
         padding: 50px;
       }
-      .salad-bowl {
-        width: 300px;
-        height: 300px;
-        /*border: #5bce5f 4px solid;*/
-        border-radius: 50%;
+
+      .salad-bowl-container {
+        width: 1000px;
         margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         position: relative;
-        /*background-color: #e0f7e9;*/
       }
 
-      .salad-bowl .bowl-icon {
-        font-size: 250px;
-        z-index: 1;
+      .salad-bowl-container img {
+        width: 100%;
+        display: block;
+      }
+
+      .word-icon {
+        position: absolute;
+        top: 28%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 70px;
+        opacity: 0.7;
         pointer-events: none;
+        z-index: 1;
       }
 
-      .salad-bowl .salad-letters {
+      .salad-letters {
         position: absolute;
         inset: 16px;
         display: flex;
@@ -45,18 +50,16 @@
         justify-content: center;
         flex-wrap: wrap;
         z-index: 2;
-        pointer-events: auto;
       }
 
       .single-letter {
         min-width: 40px;
         height: 40px;
-        display: inline-flex;
+        border-radius: 5px;
+        border: 2px dashed black;
+        display: flex;
         align-items: center;
         justify-content: center;
-        background: #ffffff;
-        border-radius: 50%;
-        border: 2px solid #5bce5f;
         font-weight: bold;
         font-size: 20px;
         cursor: pointer;
@@ -72,36 +75,43 @@
       #letter-3,
       #letter-4,
       #letter-5 {
-        display: inline-block;
-        width: 30px;
+        width: 32px;
+        font-size: 30px;
         text-align: center;
-        border: 2px solid black;
+        border: 2px dashed black;
         border-radius: 5px;
+        display: inline-block;
+        padding: 3px;
         margin: 0 5px;
       }
 
       #undo-btn {
         padding: 10px 20px;
-        font-size: 18px;
+        font-size: 20px;
         cursor: pointer;
       }
     </style>
   </head>
   <body>
-    <header></header>
     <main>
       <h1>Buchstabensalat</h1>
-      <div class="salad-bowl">
-        <span class="bowl-icon">🥗</span>
+
+      <div class="salad-bowl-container">
+        <img
+          src="../../../../../pictures/schlaupause_deutsch_salatschüssel.png"
+          alt="Tisch mit gläserner Salatschüssel"
+        />
+        <div class="word-icon"></div>
         <div class="salad-letters"></div>
       </div>
+
       <div class="word-solution">
         <span id="letter-1">_</span><span id="letter-2">_</span
         ><span id="letter-3">_</span><span id="letter-4">_</span
         ><span id="letter-5">_</span>
       </div>
+
       <button id="undo-btn">⬅️</button>
     </main>
-    <footer></footer>
   </body>
 </html>
