@@ -5,27 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Im Schulhaus</title>
     <style>
-
-img {
-    position : absolute;
-    top: 0;
-    left: 0;
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
         margin: 0 auto;
         width: 100%;
         height: 100%;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
       }
-      .default {
-        z-index: 10;
+      #default {
+        opacity: 1;
       }
-      .math {
-        z-index: 1;
+      #math {
+        opacity: 0;
       }
-      .german {
-        z-index: 1;
+      #german {
+        opacity: 0;
       }
-      
 
-
+      #Deutschtür {
+        background-color: transparent;
+        border: none;
+        position: absolute;
+        top: 30%;
+        left: 23%;
+        width: 18%;
+        height: 45%;
+        cursor: pointer;
+      }
+      #Mathetür {
+        background-color: transparent;
+        border: none;
+        position: absolute;
+        top: 30%;
+        left: 6%;
+        width: 14%;
+        height: 50%;
+        cursor: pointer;
+        clip-path: polygon((0% 0%, 100% 10%, 100% 90%, 0% 90%));
+      }
 
       #backBtn {
         position: fixed;
@@ -49,21 +69,44 @@ img {
   <body>
     <button id="backBtn">← Zurück</button>
     <img id="default" src="../../pictures/FlurZu.png" alt="" />
-    <img id ="math" src="../../pictures/MathetürOffen.png" alt="">
-    <img id="german" src="../../pictures/DeutschtürOffen.png" alt="">
-    <div id=>
-      <div id=>
-        <div id="Mathetür"></div>
-        <div id="Deutschtür"></div>
+    <img id="math" src="../../pictures/MathetürOffen.png" alt="" />
+    <img id="german" src="../../pictures/DeutschtürOffen.png" alt="" />
+    <div>
+      <div>
+        <button id="Mathetür"></button>
+        <button id="Deutschtür"></button>
       </div>
     </div>
     <script>
+      const backButton = document.getElementById("backBtn");
+      backButton.onclick = () => {
+        window.location.href = "../../index.html";
+      };
+      const mathdoor = document.getElementById("Mathetür");
+      const germandoor = document.getElementById("Deutschtür");
 
+      const defaultImg = document.getElementById("default");
+      const mathImg = document.getElementById("math");
+      const germanImg = document.getElementById("german");
 
-        const backButton = document.getElementById("backBtn");
-        backButton.onclick = () => {
-            window.location.href = "../../index.html";
-        };
+      mathdoor.onclick = () => {
+        defaultImg.style.opacity = 0;
+        germanImg.style.opacity = 0;
+        mathImg.style.opacity = 1;
+        setTimeout(() => {
+          window.location.href =
+            "./classroomsDownstairs/math/mathClassroom.html";
+        }, 1000);
+      };
+      germandoor.onclick = () => {
+        defaultImg.style.opacity = 0;
+        mathImg.style.opacity = 0;
+        germanImg.style.opacity = 1;
+        setTimeout(() => {
+          window.location.href =
+            "./classroomsDownstairs/german/germanClassroomDownstairs.html";
+        }, 1000);
+      };
     </script>
   </body>
 </html>
