@@ -1,14 +1,155 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <link rel="stylesheet" href="/src/index.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>schlaupause</title>
+    <title>Startseite SchlauPause</title>
+    <style>
+      .container {
+        position: relative;
+        width: 2000px;
+        max-width: 100vw;
+        margin: 0 auto;
+      }
+
+      .background-img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .overlay-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.6s ease;
+
+        z-index: 5; /* über Hintergrund und unter Buttons */
+      }
+
+      .overlay-img.active {
+        opacity: 1;
+      }
+
+      .clickable-element {
+        position: absolute;
+        cursor: pointer;
+        z-index: 10;
+        transform-origin: center;
+        transition: transform 0.15s ease;
+      }
+
+      .clickable-element:hover {
+        transform: translate(-50%, -100%) scale(1.1);
+        /* box-shadow: 0 0 20px rgba(10, 9, 100, 0.9); */
+      }
+
+      .door-btn {
+        left: 33.5%;
+        top: 66.1%;
+        width: 10.5%;
+        height: 18%;
+        transform: translate(-50%, -100%);
+        background: transparent;
+        border: none;
+      }
+
+      /*
+      .door img {
+        width: 100%;
+        height: auto;
+      } */
+
+      .ball {
+        left: 56%;
+        top: 83.6%;
+        width: 3.5%;
+        transform: translate(-50%, -100%);
+      }
+
+      .ball img {
+        width: 100%;
+        height: auto;
+        clip-path: circle(50%);
+      }
+
+      .ball:hover {
+        transform: translate(-50%, -100%) scale(1.3);
+      }
+
+      /* f.ball:hover img {
+        filter: drop-shadow(0 0 5px rgba(9, 12, 218, 0.8)); 
+      }*/
+
+      .bench {
+        left: 52.5%;
+        top: 72%;
+        width: 10%;
+        transform: translate(-50%, -100%);
+      }
+
+      .bench img {
+        width: 100%;
+        height: auto;
+      }
+    </style>
   </head>
   <body>
-    <div id="picture"></div>
-    <script type="module" src="./index.css"></script>
+    <div class="container">
+      <img
+        src="../pictures/schlaupause_schulhaus_gross.png"
+        alt="Schulhaus"
+        class="background-img"
+      />
+
+      <img
+        class="overlay-img"
+        src="../pictures/schlaupause_schulhaus_tuer_offen.png"
+        alt="Schulhaus Tür offen"
+      />
+
+      <button
+        class="clickable-element door-btn"
+        aria-label="über diesen Button ist das Innere des Schulhauses zu erreichen"
+      >
+        <!--<img
+          src="../pictures/schlaupause_schulhaus_tuer_freigestellt_gross.png"
+          alt="Eingang zur Schule"
+        />-->
+      </button>
+
+      <a href="#" class="clickable-element bench">
+        <img
+          src="../pictures/schlaupause_schulhaus_bank_freigestellt_gross.png"
+          alt="Ball"
+        />
+      </a>
+
+      <a href="#" class="clickable-element ball">
+        <img
+          src="../pictures/schlaupause_schulhaus_ball_freigestellt_gross.png"
+          alt="Ball"
+        />
+      </a>
+    </div>
+    <script>
+      const doorBtn = document.querySelector(".door-btn");
+      const overlayImg = document.querySelector(".overlay-img");
+
+      doorBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+
+        overlayImg.classList.add("active");
+
+        setTimeout(() => {
+          window.location.href = "./downstairs/mainDownstairs.html";
+        }, 1000);
+      });
+    </script>
   </body>
 </html>
