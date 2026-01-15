@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Im Schulhaus</title>
+    <style>
+
+img {
+    position : absolute;
+    top: 0;
+    left: 0;
+        margin: 0 auto;
+        width: 100%;
+        height: 100%;
+      }
+      .default {
+        z-index: 10;
+      }
+      .math {
+        z-index: 1;
+      }
+      .german {
+        z-index: 1;
+      }
+      
+
+
+
+      #backBtn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        padding: 10px 18px;
+        font-size: 20px;
+        border-radius: 10px;
+        border: 3px solid white;
+        background: rgba(0, 0, 0, 0.4);
+        color: white;
+        cursor: pointer;
+        z-index: 1000;
+      }
+
+      #backBtn:hover {
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body>
+    <button id="backBtn">← Zurück</button>
+    <img id="default" src="../../pictures/FlurZu.png" alt="" />
+    <img id ="math" src="../../pictures/MathetürOffen.png" alt="">
+    <img id="german" src="../../pictures/DeutschtürOffen.png" alt="">
+    <div id=>
+      <div id=>
+        <div id="Mathetür"></div>
+        <div id="Deutschtür"></div>
+      </div>
+    </div>
+    <script>
+
+
+        const backButton = document.getElementById("backBtn");
+        backButton.onclick = () => {
+            window.location.href = "../../index.html";
+        };
+    </script>
+  </body>
+</html>
