@@ -3,8 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mathematikraum</title>
-
+    <title>Plusaufgaben</title>
     <style>
       body {
         margin: 0;
@@ -34,54 +33,51 @@
         z-index: 1000;
       }
 
-      #Plus {
+      #plusBis10 {
+        border: dashed white 3px;
+        border-radius: 12px;
         position: absolute;
-        top: 25%;
-        left: 27%;
-        width: 10%;
-        height: 15%;
-        background-color: transparent;
-        border: none;
+        top: 40%;
+        left: 30%;
+        padding: 20px 30px;
+        font-size: 36px;
+        background: transparent;
+        color: white;
         cursor: pointer;
       }
-      #Minus {
+
+      #plusBis20 {
+        border: dashed white 3px;
+        border-radius: 12px;
         position: absolute;
-        top: 25%;
-        left: 40%;
-        width: 10%;
-        height: 15%;
+        top: 40%;
+        left: 60%;
+        padding: 20px 30px;
+        font-size: 36px;
         background-color: transparent;
-        border: none;
+        color: white;
         cursor: pointer;
       }
     </style>
   </head>
   <body>
     <button id="backBtn">← Zurück</button>
-    <img src="../../../../pictures/Matheraum.png" alt="" />
+    <img src="../../../../../pictures/Tafel.jpeg" alt="" />
+    <button id="plusBis10">Plus bis 10</button>
+    <button id="plusBis20">Plus bis 20</button>
 
-    <div>
-      <div>
-        <button id="Plus"></button>
-        <button id="Minus"></button>
-      </div>
-    </div>
     <script>
       const backButton = document.getElementById("backBtn");
       backButton.onclick = () => {
-        window.location.href = "../../mainDownstairs.html";
+        window.location.href = "../mathClassroom.html";
       };
-      const plusGames = document.getElementById("Plus");
-      plusGames.onclick = () => {
-        setTimeout(() => {
-          window.location.href = "./Plus/plusaufgabenauswahl.html";
-        }, 1000);
+      const plusBis10Button = document.getElementById("plusBis10");
+      plusBis10Button.onclick = () => {
+        window.location.href = "./plusBis10.html";
       };
-      const minusGames = document.getElementById("Minus");
-      minusGames.onclick = () => {
-        setTimeout(() => {
-          window.location.href = "./Minus/minusaufgabenauswahl.html";
-        }, 1000);
+      const plusBis20Button = document.getElementById("plusBis20");
+      plusBis20Button.onclick = () => {
+        window.location.href = "./plusBis20.html";
       };
     </script>
   </body>
