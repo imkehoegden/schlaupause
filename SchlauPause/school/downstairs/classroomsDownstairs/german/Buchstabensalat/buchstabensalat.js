@@ -113,7 +113,7 @@ function checkSolutionAndGiveFeedback() {
 // Eventlistener
 
 undoBtn.addEventListener("click", () => {
-  if (currentLetterStack.length === 0) return; // es ist nichts mehr zu tun :). der Stapel ist leer
+  if (currentLetterStack.length === 0) return; // es ist nichts mehr zu tun :). der Stapel ist leer!
 
   const lastLetter = currentLetterStack.pop(); // letzten Buchstaben entfernen
   updateSolutionSlots();
