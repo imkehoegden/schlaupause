@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fang den Ball!</title>
+
+    <!-- to do: Ball wird schneller im nächsten Level, evtl. Leven anzeigen, -->
+
+    <!--„Start“-Button für Kinder implementieren-->
+
+    <!-- Spiel erneut starten-->
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden; /* damit keine Scrollbalken kommen */
+      }
+
+      #football-pitch {
+        width: 100vw;
+        position: relative;
+      }
+
+      #football-pitch img {
+        width: 100%;
+        height: auto;
+      }
+
+      .football-img {
+        width: 70px;
+        position: absolute; /* sonst könnten wir es nicht verschieben */
+        z-index: 10;
+        cursor: pointer;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  </head>
+  <body>
+    <!--<h1>Fang den Ball ⚽!</h1>-->
+    <div id="football-pitch">
+      <img
+        src="../../pictures/schlaupause_fussball-wiese_gross_2.png"
+        alt="Wiese mit Blumen"
+      />
+    </div>
+    <img
+      src="../../pictures/schlaupause_schulhaus_ball_freigestellt_gross.png"
+      alt="Fußball"
+      class="football-img"
+    />
+
+    <script>
+      const ballImg = document.querySelector(".football-img");
+      let gameInterval;
+      let counter = 150; // 15 Sekunden Zeit
+
+      function startGame() {
+        gameInterval = setInterval(moveBall, 1000); // ruft jede Sekunde die Funktion moveBall auf
+        ballImg.style.left = "100px"; // so ist der Ball am Anfang positioniert und sollte daher flüssig "starten"
+        ballImg.style.top = "100px"; // Positon evlt. mit Math.random machen
+      }
+
+      function moveBall() {
+        if (counter === 0) {
+          stopGame();
+        }
+        const x = Math.random() * (window.innerWidth - 250);
+        const y = Math.random() * (window.innerHeight - 250);
+
+        ballImg.style.left = x + "px";
+        ballImg.style.top = y + "px";
+
+        counter = counter - 10;
+      }
+
+      function stopGame() {
+        clearInterval(gameInterval);
+
+        if (counter === 0) {
+          alert("Du hast es leider nicht geschafft 😢."); // Das hier noch schöner machen? Vllt ist ein alert ungeeignet für Kinder.
+        } else {
+          confettiRain();
+          setTimeout(() => {
+            alert("Super! Du hast den Ball gefangen 🎉"); // Hier auch ohne Alert?
+          }, 500);
+        }
+      }
+
+      function confettiRain() {
+        confetti({
+          particleCount: 200,
+          spread: 120,
+          origin: { y: 0.6 },
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", () => startGame());
+      ballImg.addEventListener("click", stopGame);
+    </script>
+  </body>
+</html>
