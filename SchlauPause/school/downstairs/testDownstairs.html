@@ -28,13 +28,13 @@
 
       .clickable-element:hover {
         transform: translate(-50%, -100%) scale(1.1);
-        box-shadow: 0 0 20px rgba(10, 9, 100, 0.9);
+        /* box-shadow: 0 0 20px rgba(10, 9, 100, 0.9); */
       }
 
       .door {
-        left: 33%;
-        top: 67%;
-        width: 11%;
+        left: 33.5%;
+        top: 66.3%;
+        width: 10.5%;
         transform: translate(-50%, -100%); /* horizontal zentrieren + komplett nach oben ausrichten */
       }
 
@@ -44,15 +44,26 @@
       }
 
       .ball {
-        left: 58%;
+        left: 56%;
         top: 84%;
-        width: 8%;
+        width: 4.5%;
         transform: translate(-50%, -100%);
+        transition: transform 0.15s ease, filter 0.15s ease;
+      }
+
+      .ball:hover {
+        transform: translate(-50%, -100%) scale(1.3); /* Translation bleibt gleich */
       }
 
       .ball img {
         width: 100%;
         height: auto;
+        clip-path: circle(50% at 50% 50%);
+        filter: none;
+      }
+
+      .ball:hover img {
+        /* filter: drop-shadow(0 0 5px rgba(9, 12, 218, 0.8)); */
       }
     </style>
   </head>
