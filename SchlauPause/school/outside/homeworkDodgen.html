@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bücher ausweichen</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: #222;
+        color: white;
+        font-family: sans-serif;
+        height: 100vh;
+        margin: 0;
+        position: relative;
+      }
+
+      #game {
+        display: grid;
+        grid-template-columns: repeat(5, 80px);
+        grid-template-rows: repeat(7, 80px);
+        gap: 4px;
+        background: #333;
+        padding: 10px;
+        margin-top: 20px;
+      }
+
+      .cell {
+        background: #444;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+      }
+
+      .book {
+        color: gold;
+      }
+
+      .child {
+        color: lightblue;
+      }
+
+      #info {
+        margin-top: 15px;
+        font-size: 18px;
+      }
+
+      /* Geschwindigkeit Buttons */
+      .speed-controls {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        gap: 10px;
+      }
+
+      /* Buchanzahl Buttons */
+      .book-controls {
+        position: fixed;
+        bottom: 70px;
+        right: 20px;
+        display: flex;
+        gap: 10px;
+      }
+
+      .speed-controls button,
+      .book-controls button {
+        padding: 10px 15px;
+        font-size: 18px;
+        cursor: pointer;
+      }
+
+      #speedDisplay,
+      #bookDisplay {
+        margin-left: 10px;
+        font-size: 16px;
+        align-self: center;
+      }
+
+      /* Modal */
+      #modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 32px;
+        z-index: 100;
+        display: none;
+        border-radius: 10px;
+      }
+
+      #modalContent {
+        background: #444;
+        padding: 30px 50px;
+        border-radius: 15px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="game"></div>
+    <div id="info">⬅️ ➡️ bewegen</div>
+
+    <!-- Geschwindigkeit Buttons -->
+    <div class="speed-controls">
+      <button id="speedDown">-</button>
+      <button id="speedUp">+</button>
+      <span id="speedDisplay">1000 ms pro Zeile</span>
+    </div>
+
+    <!-- Buchanzahl Buttons -->
+    <div class="book-controls">
+      <button id="booksDown">- Bücher</button>
+      <button id="booksUp">+ Bücher</button>
+      <span id="bookDisplay">Bücher pro Runde: 1</span>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal">
+      <div id="modalContent">🍀 Neue Runde!</div>
+    </div>
+
+    <script>
+      const cols = 5;
+      const rows = 7;
+
+      const game = document.getElementById("game");
+      const speedUpBtn = document.getElementById("speedUp");
+      const speedDownBtn = document.getElementById("speedDown");
+      const speedDisplay = document.getElementById("speedDisplay");
+      const booksUpBtn = document.getElementById("booksUp");
+      const booksDownBtn = document.getElementById("booksDown");
+      const bookDisplay = document.getElementById("bookDisplay");
+      const modal = document.getElementById("modal");
+
+      let grid = [];
+      let childPos = 2;
+      let bookInterval;
+      let speed = 1000;
+      let numBooks = 1; // Anzahl Bücher pro Intervall
+      let gameOver = false;
+
+      function createGrid() {
+        game.innerHTML = "";
+        grid = [];
+        for (let r = 0; r < rows; r++) {
+          grid[r] = [];
+          for (let c = 0; c < cols; c++) {
+            const cell = document.createElement("div");
+            cell.className = "cell";
+            game.appendChild(cell);
+            grid[r][c] = "";
+          }
+        }
+      }
+
+      function render() {
+        const cells = document.querySelectorAll(".cell");
+        cells.forEach(
+          (cell) => ((cell.textContent = ""), (cell.className = "cell"))
+        );
+
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            const index = r * cols + c;
+            if (grid[r][c] === "book") {
+              cells[index].textContent = "📘";
+              cells[index].classList.add("book");
+            }
+            if (grid[r][c] === "child") {
+              cells[index].textContent = "🧒";
+              cells[index].classList.add("child");
+            }
+          }
+        }
+      }
+
+      function moveBooks() {
+        for (let r = rows - 1; r > 0; r--) {
+          for (let c = 0; c < cols; c++) {
+            if (grid[r - 1][c] === "book") {
+              if (r === rows - 1 && c === childPos) {
+                triggerGameOver();
+                return;
+              }
+              grid[r][c] = "book";
+              grid[r - 1][c] = "";
+            }
+          }
+        }
+
+        // Neue Bücher oben, Anzahl numBooks
+        let chosenCols = new Set();
+        while (chosenCols.size < numBooks) {
+          chosenCols.add(Math.floor(Math.random() * cols));
+        }
+        chosenCols.forEach((c) => (grid[0][c] = "book"));
+      }
+
+      function placeChild() {
+        grid[rows - 1].fill("");
+        grid[rows - 1][childPos] = "child";
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (gameOver) return;
+        if (e.key === "ArrowLeft" && childPos > 0) childPos--;
+        if (e.key === "ArrowRight" && childPos < cols - 1) childPos++;
+        placeChild();
+        render();
+      });
+
+      function startBookMovement() {
+        clearInterval(bookInterval);
+        bookInterval = setInterval(() => {
+          if (!gameOver) {
+            moveBooks();
+            placeChild();
+            render();
+          }
+        }, speed);
+      }
+
+      function updateSpeedDisplay() {
+        speedDisplay.textContent = `${speed} ms pro Zeile`;
+      }
+
+      function updateBookDisplay() {
+        bookDisplay.textContent = `Bücher pro Runde: ${numBooks}`;
+      }
+
+      // Geschwindigkeit Buttons
+      speedUpBtn.onclick = () => {
+        if (speed > 100) speed -= 100;
+        startBookMovement();
+        updateSpeedDisplay();
+      };
+      speedDownBtn.onclick = () => {
+        speed += 100;
+        startBookMovement();
+        updateSpeedDisplay();
+      };
+
+      // Buchanzahl Buttons
+      booksUpBtn.onclick = () => {
+        if (numBooks < cols) numBooks += 1;
+        updateBookDisplay();
+      };
+      booksDownBtn.onclick = () => {
+        if (numBooks > 1) numBooks -= 1;
+        updateBookDisplay();
+      };
+
+      // Game Over + neue Runde
+      function triggerGameOver() {
+        gameOver = true;
+        clearInterval(bookInterval);
+        showModal("😢 Game Over! Neue Runde startet...");
+        setTimeout(startRound, 2000);
+      }
+
+      function showModal(text) {
+        modal.querySelector("#modalContent").textContent = text;
+        modal.style.display = "flex";
+        setTimeout(() => (modal.style.display = "none"), 1500);
+      }
+
+      function startRound() {
+        gameOver = false;
+        childPos = 2;
+        createGrid();
+        placeChild();
+        render();
+        startBookMovement();
+        updateSpeedDisplay();
+        updateBookDisplay();
+        showModal("🍀 Neue Runde! Weiche den Büchern aus!");
+      }
+
+      function startGame() {
+        startRound();
+      }
+
+      startGame();
+    </script>
+  </body>
+</html>
