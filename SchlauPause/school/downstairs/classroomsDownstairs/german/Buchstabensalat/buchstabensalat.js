@@ -1,25 +1,25 @@
 // Wörter festlegen
 
 const words = [
-  { letters: ["B", "L", "U", "M", "E"], word: "BLUME", icon: "🌸" },
-  { letters: ["T", "A", "S", "S", "E"], word: "TASSE", icon: "☕" },
-  { letters: ["F", "I", "S", "C", "H"], word: "FISCH", icon: "🐟" },
-  { letters: ["Z", "E", "B", "R", "A"], word: "ZEBRA", icon: "🦓" },
-  { letters: ["S", "C", "H", "A", "F"], word: "SCHAF", icon: "🐑" },
-  { letters: ["V", "O", "G", "E", "L"], word: "VOGEL", icon: "🐦" },
-  { letters: ["K", "A", "T", "Z", "E"], word: "KATZE", icon: "🐱" },
-  { letters: ["A", "P", "F", "E", "L"], word: "APFEL", icon: "🍎" },
-  { letters: ["H", "O", "N", "I", "G"], word: "HONIG", icon: "🍯" },
-  { letters: ["R", "E", "G", "A", "L"], word: "REGAL", icon: "🗄️" },
-  { letters: ["K", "U", "G", "E", "L"], word: "KUGEL", icon: "⚽" },
-  { letters: ["R", "A", "D", "I", "O"], word: "RADIO", icon: "📻" },
-  { letters: ["W", "O", "L", "K", "E"], word: "WOLKE", icon: "☁️" },
-  { letters: ["S", "T", "U", "H", "L"], word: "STUHL", icon: "🪑" },
+  { letters: ["B", "L", "U", "M", "E"], icon: "🌸" },
+  { letters: ["T", "A", "S", "S", "E"], icon: "☕" },
+  { letters: ["F", "I", "S", "C", "H"], icon: "🐟" },
+  { letters: ["Z", "E", "B", "R", "A"], icon: "🦓" },
+  { letters: ["S", "C", "H", "A", "F"], icon: "🐑" },
+  { letters: ["V", "O", "G", "E", "L"], icon: "🐦" },
+  { letters: ["K", "A", "T", "Z", "E"], icon: "🐱" },
+  { letters: ["A", "P", "F", "E", "L"], icon: "🍎" },
+  { letters: ["H", "O", "N", "I", "G"], icon: "🍯" },
+  { letters: ["R", "E", "G", "A", "L"], icon: "🗄️" },
+  { letters: ["K", "U", "G", "E", "L"], icon: "⚽" },
+  { letters: ["R", "A", "D", "I", "O"], icon: "📻" },
+  { letters: ["W", "O", "L", "K", "E"], icon: "☁️" },
+  { letters: ["S", "T", "U", "H", "L"], icon: "🪑" },
 ];
 
 // DOM Elemente holen
-const lettersContainer = document.querySelector(".salad-letters");
-const wordIcon = document.querySelector(".word-icon");
+const saladLettersContainer = document.querySelector(".salad-letters");
+const wordIconContainer = document.querySelector(".word-icon");
 const wordSolution = document.querySelector(".word-solution");
 const undoBtn = document.getElementById("undo-btn");
 const letterSlots = [
@@ -63,9 +63,9 @@ let currentLetterStack = []; // neues Array für das Wort, dass das Kind gerade 
 // Funktion 3: Buchstaben in Salatbowl anzeigen, also DOM-Elemente für einzelne Buchstaben erzeugen
 
 function showWordInBowl(letters) {
-  lettersContainer.innerHTML = ""; // zuerst leerer Ziel-Container
+  saladLettersContainer.innerHTML = ""; // zuerst leerer Ziel-Container
 
-  wordIcon.textContent = currentWordObject.icon;
+  wordIconContainer.textContent = currentWordObject.icon;
 
   letters.forEach((letter) => {
     // DOM-Elemente erstellen
@@ -85,7 +85,7 @@ function showWordInBowl(letters) {
       }
     });
 
-    lettersContainer.appendChild(letterSpan);
+    saladLettersContainer.appendChild(letterSpan);
   });
 }
 
@@ -97,42 +97,18 @@ function checkSolutionAndGiveFeedback() {
 
   if (playerWord === correctWord) {
     letterSlots.forEach((slot) => {
-      slot.style.backgroundColor = "#a8e6a3";
+      slot.style.backgroundColor = "#a8e6a3"; // hier lieber das Konfetti verwenden
     });
-    setTimeout(showNextWord, 1000);
   } else {
     letterSlots.forEach((slot) => {
-      /*slot.style.backgroundColor = "#f6b1e5";*/
-      letterSlots.forEach((slot) => {
-        slot.classList.add("shake");
-      });
-
-      // shake-Klasse nach Animation wieder entfernen
-      setTimeout(() => {
-        letterSlots.forEach((slot) => slot.classList.remove("shake"));
-      }, 500);
+      slot.style.backgroundColor = "#f6b1e5";
     });
   }
 }
 
 // Funktion 5: Slots des Lösungswort aktualisieren
 
-function updateSolutionSlots() {
-  letterSlots.forEach((slot, index) => {
-    slot.textContent = currentLetterStack[index] || "_";
-    slot.style.backgroundColor = "";
-  });
-}
-
 // Funktion 6: neues Wort anzeigen
-function showNextWord() {
-  currentWordObject = getRandomWord();
-  currentWord = currentWordObject.letters;
-  saladLetters = shuffleLetters(currentWord);
-  currentLetterStack = [];
-  updateSolutionSlots();
-  showWordInBowl(saladLetters);
-}
 
 // Eventlistener
 
@@ -147,20 +123,8 @@ undoBtn.addEventListener("click", () => {
   letterSpan.textContent = lastLetter;
   letterSpan.classList.add("single-letter");
 
-  // Wieder Klick-Funktion hinzufügen
-  letterSpan.addEventListener("click", () => {
-    currentLetterStack.push(lastLetter);
-    updateSolutionSlots();
-
-    letterSpan.remove();
-    if (currentLetterStack.length === currentWord.length) {
-      checkSolutionAndGiveFeedback();
-    }
-  });
-
-  lettersContainer.appendChild(letterSpan);
+  saladLettersContainer.appendChild(letterSpan);
   console.log("Buchstabe wurde entfernt");
 });
 
-updateSolutionSlots();
 showWordInBowl(saladLetters);
