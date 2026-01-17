@@ -97,7 +97,7 @@ function checkKidSolutionAndGiveFeedback() {
     setTimeout(showNextWord, 1000);
   } else {
     solutionLetterSlots.forEach((slot) => {
-      /*slot.style.backgroundColor = "#f6b1e5";*/
+      /* slot.style.backgroundColor = "#f6b1e5"; */
       slot.classList.add("shake");
     });
 
