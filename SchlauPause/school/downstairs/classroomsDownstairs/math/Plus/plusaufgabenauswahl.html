@@ -6,8 +6,10 @@
     <title>Plusaufgaben</title>
     <style>
       body {
+        position: relative;
         margin: 0;
         height: 100vh;
+        width: 100vw;
         overflow: hidden;
       }
       img {
@@ -33,30 +35,26 @@
         z-index: 1000;
       }
 
-      #plusBis10 {
-        border: dashed white 3px;
-        border-radius: 12px;
-        position: absolute;
-        top: 40%;
-        left: 30%;
-        padding: 20px 30px;
-        font-size: 36px;
-        background: transparent;
-        color: white;
-        cursor: pointer;
-      }
-
+      #plusBis10,
       #plusBis20 {
         border: dashed white 3px;
         border-radius: 12px;
         position: absolute;
-        top: 40%;
-        left: 60%;
-        padding: 20px 30px;
-        font-size: 36px;
-        background-color: transparent;
+        left: 35vw;
+        width: 30vw;
+        height: 10vh;
+        padding: 2vh 4vw;
+        font-size: 20px;
+        background: transparent;
         color: white;
         cursor: pointer;
+      }
+      #plusBis10 {
+        top: 35vh;
+      }
+
+      #plusBis20 {
+        top: 50vh;
       }
     </style>
   </head>
