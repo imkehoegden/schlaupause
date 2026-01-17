@@ -10,24 +10,38 @@
         font-family: sans-serif;
         margin: 0;
         padding: 0;
+        height: 100vh;
+        overflow: hidden; /* verbietet Scrollen */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
 
       main {
-        max-width: 1000px;
-        margin: 20px auto;
-        padding: 20px;
-        text-align: center;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 100%;
       }
 
       .salad-bowl-container {
-        margin-bottom: 20px;
         position: relative;
+        flex: 1;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 0;
       }
 
       .salad-bowl-container img {
-        width: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
         height: auto;
-        display: block;
+        object-fit: contain;
       }
 
       .salad-word-icon {
@@ -53,7 +67,7 @@
       }
 
       .bowl-letter {
-        min-width: 40px;
+        width: 40px;
         height: 40px;
         border-radius: 5px;
         border: 2px dashed black;
@@ -61,13 +75,18 @@
         align-items: center;
         justify-content: center;
         font-weight: bold;
-        font-size: 20px;
+        font-size: 30px;
         cursor: pointer;
+      }
+
+      .bowl-letter:hover {
+        transform: scale(1.1);
       }
 
       .solution-word {
         font-size: 25px;
-        margin-bottom: 30px;
+        margin: 20px 0;
+        flex: 0 0 auto;
       }
 
       #letter-1,
@@ -75,22 +94,51 @@
       #letter-3,
       #letter-4,
       #letter-5 {
-        width: 32px;
+        width: 40px;
+        height: 40px;
         font-size: 30px;
         text-align: center;
         border: 2px dashed black;
         border-radius: 5px;
-        display: inline-block;
-        padding: 3px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        padding: 0;
         margin: 0 5px;
       }
 
       #undo-btn {
-        padding: 10px 20px;
+        padding: 12px 25px;
         font-size: 20px;
         cursor: pointer;
-        border: none;
-        border-radius: 5px;
+        border: 3px solid white;
+        border-radius: 10px;
+        flex: 0 0 auto;
+        margin-bottom: 20px;
+        background: rgba(0, 0, 0, 0.4);
+      }
+
+      #undo-btn:hover {
+        transform: scale(1.1);
+      }
+
+      #backBtn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        padding: 10px 18px;
+        font-size: 20px;
+        border-radius: 10px;
+        border: 3px solid white;
+        background: rgba(0, 0, 0, 0.4);
+        color: white;
+        cursor: pointer;
+        z-index: 1000;
+      }
+
+      #backBtn:hover {
+        transform: scale(1.1);
       }
 
       /* Shake Animation wird mit JS hinzugefügt */
@@ -122,7 +170,7 @@
   </head>
   <body>
     <main>
-      <!--<h1>Buchstabensalat</h1>-->
+      <button id="backBtn">← Zurück</button>
 
       <div class="salad-bowl-container">
         <img
