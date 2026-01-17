@@ -10,17 +10,17 @@
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
+        width: 3000px;
       }
 
       main {
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 50px;
+        padding: 20px;
       }
 
       .salad-bowl-container {
-        width: 1000px;
         margin-bottom: 20px;
         position: relative;
       }
@@ -52,7 +52,7 @@
         z-index: 2;
       }
 
-      .single-letter {
+      .bowl-letter {
         min-width: 40px;
         height: 40px;
         border-radius: 5px;
@@ -82,13 +82,39 @@
         border-radius: 5px;
         display: inline-block;
         padding: 3px;
-        margin: 0 5px;
+        margin: 20px 5px;
       }
 
       #undo-btn {
         padding: 10px 20px;
         font-size: 20px;
         cursor: pointer;
+      }
+
+      /* Shake Animation wird mit JS hinzugefügt */
+      @keyframes shake {
+        0% {
+          transform: translateX(0);
+        }
+        20% {
+          transform: translateX(-5px);
+        }
+        40% {
+          transform: translateX(5px);
+        }
+        60% {
+          transform: translateX(-5px);
+        }
+        80% {
+          transform: translateX(5px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+
+      .shake {
+        animation: shake 0.5s ease;
       }
     </style>
   </head>
@@ -101,11 +127,11 @@
           src="../../../../../pictures/schlaupause_deutsch_salatschüssel.png"
           alt="Tisch mit gläserner Salatschüssel"
         />
-        <div class="word-icon"></div>
+        <div class="salad-word-icon"></div>
         <div class="salad-letters"></div>
       </div>
 
-      <div class="word-solution">
+      <div class="solution-word">
         <span id="letter-1">_</span><span id="letter-2">_</span
         ><span id="letter-3">_</span><span id="letter-4">_</span
         ><span id="letter-5">_</span>

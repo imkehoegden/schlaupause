@@ -15,14 +15,13 @@ const words = [
   { letters: ["R", "A", "D", "I", "O"], icon: "📻" },
   { letters: ["W", "O", "L", "K", "E"], icon: "☁️" },
   { letters: ["S", "T", "U", "H", "L"], icon: "🪑" },
-];
+]; // evtl. noch mit Varibler Wordlänge?
 
 // DOM Elemente holen
-const saladLettersContainer = document.querySelector(".salad-letters");
-const wordIconContainer = document.querySelector(".word-icon");
-const wordSolution = document.querySelector(".word-solution");
-const undoBtn = document.getElementById("undo-btn");
-const letterSlots = [
+const bowlLettersContainer = document.querySelector(".salad-letters");
+const bowlWordIconContainer = document.querySelector(".salad-word-icon");
+const undoButton = document.getElementById("undo-btn");
+const solutionLetterSlots = [
   document.getElementById("letter-1"),
   document.getElementById("letter-2"),
   document.getElementById("letter-3"),
@@ -30,19 +29,25 @@ const letterSlots = [
   document.getElementById("letter-5"),
 ];
 
-// Funktion 1: wähle random Wort aus wordsArray aus
+// Variablen für Spielzustand
+let currentWordObject = getRandomWord();
+let targetWordLetters = currentWordObject.letters;
+let shuffledBowlLetters = shuffleLetters(targetWordLetters);
+let kidSelectedLetters = []; // neues Array für das Wort, dass das Kind gerade legt
 
+// Funktion 1: wähle random Wort aus wordsArray aus
 function getRandomWord() {
   const randomIndex = Math.floor(Math.random() * words.length);
   return words[randomIndex];
 }
 
 // Funktion 2: mische die Buchstaben
-function shuffleLetters(array) {
-  const letters = [...array]; // kopiert Array, damit Original unverändert bleibt
+// Jedes Element wird genau einmal zufällig mit einem vorherigen Element getauscht, um eine gleichmäßige Zufallsverteilung zu garantieren.
+function shuffleLetters(lettersArray) {
+  const letters = [...lettersArray]; // kopiert Array, damit Original unverändert bleibt
 
   for (let i = letters.length - 1; i > 0; i--) {
-    // Schleife von letztem Buchstaben bis zum zweiten
+    // Schleife von letztem Buchstaben bis zum zweiten. Iteration rückwärts, um das Fisher-Yates-Prinzip korrekt umzusetzen
     const j = Math.floor(Math.random() * (i + 1));
     [letters[i], letters[j]] = [letters[j], letters[i]]; // Buchstaben tauschen
   }
@@ -50,81 +55,104 @@ function shuffleLetters(array) {
   return letters;
 }
 
-// Variablen für den Spielzustand
-
-let currentWordObject = getRandomWord();
-let currentWord = currentWordObject.letters;
-let saladLetters = shuffleLetters(currentWord);
-let currentLetterStack = []; // neues Array für das Wort, dass das Kind gerade legt
-
-// console.log("Aktuelles Wort:", currentWord);
-// console.log("Salatbowl:", saladLetters);
-
-// Funktion 3: Buchstaben in Salatbowl anzeigen, also DOM-Elemente für einzelne Buchstaben erzeugen
+// Funktion 3: Buchstaben in Bowl anzeigen, also DOM-Elemente für einzelne Buchstaben erzeugen
 
 function showWordInBowl(letters) {
-  saladLettersContainer.innerHTML = ""; // zuerst leerer Ziel-Container
+  bowlLettersContainer.innerHTML = ""; // Vorherige Buchstaben entfernen, damit bei neuem Wort keine alten DOM-Elemente übrig bleiben
 
-  wordIconContainer.textContent = currentWordObject.icon;
+  bowlWordIconContainer.textContent = currentWordObject.icon; // Icon in Bowl legen
 
   letters.forEach((letter) => {
     // DOM-Elemente erstellen
     const letterSpan = document.createElement("span");
     letterSpan.textContent = letter;
-    letterSpan.classList.add("single-letter");
+    letterSpan.classList.add("bowl-letter");
 
     letterSpan.addEventListener("click", () => {
-      if (currentLetterStack.length > currentWord.length) return;
+      // so können sie in Bowl zurückgeschoben werden
+      if (kidSelectedLetters.length > targetWordLetters.length) return; //verhindert, dass mehr Buchstaben als vorgesehen gewählt werden
 
-      currentLetterStack.push(letter);
-      updateSolutionSlots();
-      letterSpan.remove();
+      kidSelectedLetters.push(letter); // Der gewählte Buchstabe gehört jetzt zum Lösungswort
+      updateSolutionSlots(); // Anzeige der Lösungsslots an den aktuellen Zustand anpassen
+      letterSpan.remove(); // Ein gewählter Buchstabe darf nicht erneut angeklickt werden
 
-      if (currentLetterStack.length === currentWord.length) {
-        checkSolutionAndGiveFeedback();
+      if (kidSelectedLetters.length === targetWordLetters.length) {
+        checkKidSolutionAndGiveFeedback();
       }
     });
 
-    saladLettersContainer.appendChild(letterSpan);
+    bowlLettersContainer.appendChild(letterSpan);
   });
 }
 
 // Funktion 4: Wort überprüfen, ob richtig oder falsch
+function checkKidSolutionAndGiveFeedback() {
+  const kidWord = kidSelectedLetters.join("");
+  const correctWord = targetWordLetters.join("");
 
-function checkSolutionAndGiveFeedback() {
-  const playerWord = currentLetterStack.join("");
-  const correctWord = currentWord.join("");
-
-  if (playerWord === correctWord) {
-    letterSlots.forEach((slot) => {
-      slot.style.backgroundColor = "#a8e6a3"; // hier lieber das Konfetti verwenden
+  if (kidWord === correctWord) {
+    solutionLetterSlots.forEach((slot) => {
+      slot.style.backgroundColor = "#a8e6a3"; // hier lieber das Konfetti verwenden oder Umrandung grün färben, wie bei Melas Spiel?
     });
+    setTimeout(showNextWord, 1000);
   } else {
-    letterSlots.forEach((slot) => {
-      slot.style.backgroundColor = "#f6b1e5";
+    solutionLetterSlots.forEach((slot) => {
+      /*slot.style.backgroundColor = "#f6b1e5";*/
+      slot.classList.add("shake");
     });
+
+    // Die Shake-Animation wird per Klassenvergabe, also in CSS ausgelöst. Die Klasse muss nach Ablauf entfernt werden, damit die Animation bei einem erneuten Fehler wieder abgespielt werden kann.
+    setTimeout(() => {
+      solutionLetterSlots.forEach((slot) => slot.classList.remove("shake"));
+    }, 500);
   }
 }
 
-// Funktion 5: Slots des Lösungswort aktualisieren
+// Funktion 5: Slots des Lösungsworts aktualisieren
+// Synchronisiert die gewählten Buchstaben mit der Darstellung der Lösungsslots
+function updateSolutionSlots() {
+  solutionLetterSlots.forEach((slot, i) => {
+    slot.textContent = kidSelectedLetters[i] || "_";
+    slot.style.backgroundColor = "";
+  });
+}
 
 // Funktion 6: neues Wort anzeigen
+function showNextWord() {
+  currentWordObject = getRandomWord();
+  targetWordLetters = currentWordObject.letters;
+  shuffledBowlLetters = shuffleLetters(targetWordLetters);
+  kidSelectedLetters = [];
+  updateSolutionSlots();
+  showWordInBowl(shuffledBowlLetters);
+}
 
 // Eventlistener
+undoButton.addEventListener("click", () => {
+  if (kidSelectedLetters.length === 0) return; // Undo ist nur möglich, wenn mindestens ein Buchstabe gewählt wurde.
 
-undoBtn.addEventListener("click", () => {
-  if (currentLetterStack.length === 0) return; // es ist nichts mehr zu tun :). der Stapel ist leer!
-
-  const lastLetter = currentLetterStack.pop(); // letzten Buchstaben entfernen
+  const lastLetter = kidSelectedLetters.pop(); // entfernt letzten Buchstaben des "Stapels" // Array-Methode .pop() entfernt das letzte Element eines Arrays, gibt es zurück, verändert Array also
   updateSolutionSlots();
 
-  // Buchstabe zurück in die Salatschüssel
+  // Buchstabe zurück in die Bowl legen
   const letterSpan = document.createElement("span");
   letterSpan.textContent = lastLetter;
-  letterSpan.classList.add("single-letter");
+  letterSpan.classList.add("bowl-letter");
 
-  saladLettersContainer.appendChild(letterSpan);
-  console.log("Buchstabe wurde entfernt");
+  // Wieder Klick-Funktion hinzufügen
+  letterSpan.addEventListener("click", () => {
+    kidSelectedLetters.push(lastLetter);
+    updateSolutionSlots();
+
+    letterSpan.remove();
+    if (kidSelectedLetters.length === targetWordLetters.length) {
+      checkKidSolutionAndGiveFeedback();
+    }
+  });
+
+  bowlLettersContainer.appendChild(letterSpan);
+  // console.log("Buchstabe wurde entfernt");
 });
 
-showWordInBowl(saladLetters);
+updateSolutionSlots();
+showWordInBowl(shuffledBowlLetters);
