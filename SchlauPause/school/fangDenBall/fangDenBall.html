@@ -82,8 +82,10 @@
 
       function startGame() {
         gameInterval = setInterval(moveBall, 1000); // ruft jede Sekunde die Funktion moveBall auf
-        ballImg.style.left = "100px"; // so ist der Ball am Anfang positioniert und sollte daher flüssig "starten"
-        ballImg.style.top = "100px"; // Positon evlt. mit Math.random machen
+        ballImg.style.left =
+          Math.floor(Math.random() * (window.innerWidth - 250)) + "px"; // zufällige Startposition hinzugefügt
+        ballImg.style.top =
+          Math.floor(Math.random() * (window.innerHeight - 250)) + "px";
       }
 
       function moveBall() {
