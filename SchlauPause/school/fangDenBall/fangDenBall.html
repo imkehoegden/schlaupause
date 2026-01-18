@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
   <head>
     <meta charset="UTF-8" />
@@ -32,6 +32,31 @@
         position: absolute; /* sonst könnten wir es nicht verschieben */
         z-index: 10;
         cursor: pointer;
+      }
+
+      @keyframes shake {
+        0% {
+          transform: translateX(0);
+        }
+        20% {
+          transform: translateX(-5px);
+        }
+        40% {
+          transform: translateX(5px);
+        }
+        60% {
+          transform: translateX(-5px);
+        }
+        80% {
+          transform: translateX(5px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+
+      .shake {
+        animation: shake 0.5s ease;
       }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -78,12 +103,15 @@
         clearInterval(gameInterval);
 
         if (counter === 0) {
-          alert("Du hast es leider nicht geschafft 😢."); // Das hier noch schöner machen? Vllt ist ein alert ungeeignet für Kinder.
+          loseShake();
+          /* alert("Du hast es leider nicht geschafft 😢."); // Vllt ist ein alert ungeeignet für Kinder?*/
+          setTimeout(startGame, 3000);
+          // Spiel neu starten
         } else {
           confettiRain();
-          setTimeout(() => {
+          /* setTimeout(() => {
             alert("Super! Du hast den Ball gefangen 🎉"); // Hier auch ohne Alert?
-          }, 500);
+          }, 500);*/
         }
       }
 
@@ -93,6 +121,13 @@
           spread: 120,
           origin: { y: 0.6 },
         });
+      }
+
+      function loseShake() {
+        document.body.classList.add("shake");
+        setTimeout(() => {
+          document.body.classList.remove("shake");
+        }, 3000);
       }
 
       document.addEventListener("DOMContentLoaded", () => startGame());
