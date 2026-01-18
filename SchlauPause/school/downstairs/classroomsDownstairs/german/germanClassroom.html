@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
   <head>
     <meta charset="UTF-8" />
@@ -6,11 +6,13 @@
     <title>Deutschraum</title>
 
     <style>
+      /* Melas Styles: 
       body {
         margin: 0;
         height: 100vh;
         overflow: hidden;
       }
+
       img {
         position: absolute;
         top: 0;
@@ -18,6 +20,43 @@
         margin: 0 auto;
         width: 100%;
         height: 100%;
+      }*/
+
+      body {
+        margin: 0;
+        width: 100%; /* 100 % der Breite des Elternelements (HTML). Damit ist Body so breit wie Viewport */
+        height: 100%; /* 100 % der Höhe des Elternelements (HTML). Damit ist Body so hoch wie Viewport */
+        overflow: hidden; /* Verhindert Scrollbalken */
+      }
+
+      .container {
+        aspect-ratio: 4 / 3;
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .background-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+      }
+
+      .overlay-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.6s ease;
+        z-index: 5;
       }
 
       #backBtn {
@@ -34,7 +73,11 @@
         z-index: 1000;
       }
 
-      #Plus {
+      #backBtn:hover {
+        transform: scale(1.1);
+      }
+
+      #WhichLetterToStart {
         position: absolute;
         top: 25%;
         left: 27%;
@@ -44,7 +87,8 @@
         border: none;
         cursor: pointer;
       }
-      #Minus {
+
+      #Buchstabensalat {
         position: absolute;
         top: 25%;
         left: 40%;
@@ -54,33 +98,81 @@
         border: none;
         cursor: pointer;
       }
+
+      .clickable-element {
+        position: absolute;
+        cursor: pointer;
+        z-index: 10;
+        /* transform-origin: center; */
+        transition: transform 0.15s ease;
+      }
+
+      .clickable-element:hover {
+        transform: scale(1.1);
+      }
+
+      .alphabet {
+        position: absolute;
+        top: 12.5%;
+        left: 6%;
+        width: 30%;
+      }
+
+      .alphabet img {
+        width: 100%;
+        height: auto;
+        display: block;
+        /* clip-path: ; noch ausfüllen*/
+        filter: drop-shadow(2px 4px 6px rgb(20, 8, 77));
+      }
     </style>
   </head>
   <body>
-    <button id="backBtn">← Zurück</button>
-    <img src="../../../../pictures/Matheraum.png" alt="" />
+    <div class="container">
+      <button id="backBtn">← Zurück</button>
 
-    <div>
+      <img
+        class="background-img"
+        src="../../../../pictures/schlaupause_deutschraum_neu_gross.png"
+        alt="Illustration eines Deutschraums einer ersten Klasse"
+      />
+
+      <!--
+    Hier könnte noch ein Overlay-Image eingefügt werden für eine Animation beim Betreten des Raums.
+
+    <img class="overlay-img" src="" alt="Deutschraum mit offener Tür" />
+      -->
+
       <div>
-        <button id="Plus"></button>
-        <button id="Minus"></button>
+        <div>
+          <button id="WhichLetterToStart"></button>
+          <button id="Buchstabensalat"></button>
+        </div>
       </div>
+
+      <a href="#" class="clickable-element alphabet">
+        <img
+          src="../../../../pictures/schlaupause_deutsch_alphabet_freigestellt.png"
+          alt="Alphabet-Poster"
+        />
+      </a>
     </div>
+
     <script>
       const backButton = document.getElementById("backBtn");
       backButton.onclick = () => {
         window.location.href = "../../mainDownstairs.html";
       };
-      const plusGames = document.getElementById("Plus");
-      plusGames.onclick = () => {
+      const whichLetterToStart = document.getElementById("WhichLetterToStart");
+      whichLetterToStart.onclick = () => {
         setTimeout(() => {
-          window.location.href = "./Plus/plusaufgabenauswahl.html";
+          window.location.href = "./WhichLetterToStart/whichletterstart.html";
         }, 1000);
       };
-      const minusGames = document.getElementById("Minus");
-      minusGames.onclick = () => {
+      const buchstabensalat = document.getElementById("Buchstabensalat");
+      buchstabensalat.onclick = () => {
         setTimeout(() => {
-          window.location.href = "./Minus/minusaufgabenauswahl.html";
+          window.location.href = "./Buchstabensalat/buchstabensalat.html";
         }, 1000);
       };
     </script>
