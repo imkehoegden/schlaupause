@@ -22,29 +22,51 @@
         height: 100%;
       }*/
 
+      /* Versuch Imke:
       body {
         margin: 0;
-        width: 100%; /* 100 % der Breite des Elternelements (HTML). Damit ist Body so breit wie Viewport */
-        height: 100%; /* 100 % der Höhe des Elternelements (HTML). Damit ist Body so hoch wie Viewport */
-        overflow: hidden; /* Verhindert Scrollbalken */
+        width: 100%; 100 % der Breite des Elternelements (HTML). Damit ist Body so breit wie Viewport
+        height: 100%; 100 % der Höhe des Elternelements (HTML). Damit ist Body so hoch wie Viewport 
+        overflow: hidden; Verhindert Scrollbalken 
+      } 
+        
+      background-image {
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+      } */
+
+      #backBtn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        padding: 10px 18px;
+        font-size: 20px;
+        border-radius: 10px;
+        border: 3px solid white;
+        background: rgba(0, 0, 0, 0.4);
+        color: white;
+        cursor: pointer;
+        z-index: 1000;
+        transition: transform 0.15s ease;
+      }
+
+      #backBtn:hover {
+        transform: scale(1.1);
       }
 
       .container {
-        aspect-ratio: 4 / 3;
+        /* Containergröße = Bildgröße. Sonst waren die clickable Elements nicht zu positionieren */
+        max-width: 3000px;
         position: relative;
-        width: 100vw;
-        height: 100vh;
-        overflow: hidden;
+        margin: 0 auto;
+        aspect-ratio: 3 / 2; /* damit der Container skalierbar und die Overlays korrekt bleiben. */
       }
 
       .background-img {
-        position: absolute;
-        top: 0;
-        left: 0;
         width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: 1;
+        height: auto;
+        display: block;
       }
 
       .overlay-img {
@@ -59,24 +81,23 @@
         z-index: 5;
       }
 
-      #backBtn {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        padding: 10px 18px;
-        font-size: 20px;
-        border-radius: 10px;
-        border: 3px solid white;
-        background: rgba(0, 0, 0, 0.4);
-        color: white;
-        cursor: pointer;
-        z-index: 1000;
+      .overlay-img.active {
+        opacity: 1;
       }
 
-      #backBtn:hover {
+      .clickable-element {
+        position: absolute;
+        cursor: pointer;
+        z-index: 10;
+        /* transform-origin: center; */
+        transition: transform 0.15s ease;
+      }
+
+      .clickable-element:hover {
         transform: scale(1.1);
       }
 
+      /*
       #WhichLetterToStart {
         position: absolute;
         top: 25%;
@@ -97,25 +118,13 @@
         background-color: transparent;
         border: none;
         cursor: pointer;
-      }
-
-      .clickable-element {
-        position: absolute;
-        cursor: pointer;
-        z-index: 10;
-        /* transform-origin: center; */
-        transition: transform 0.15s ease;
-      }
-
-      .clickable-element:hover {
-        transform: scale(1.1);
-      }
+      }*/
 
       .alphabet {
-        position: absolute;
         top: 12.5%;
-        left: 6%;
+        left: 5%;
         width: 30%;
+        height: auto;
       }
 
       .alphabet img {
@@ -124,6 +133,81 @@
         display: block;
         /* clip-path: ; noch ausfüllen*/
         filter: drop-shadow(2px 4px 6px rgb(20, 8, 77));
+      }
+
+      .bowl {
+        top: 52%;
+        left: 58%;
+        width: 10%;
+        height: auto;
+      }
+
+      .bowl img {
+        width: 100%;
+        height: auto;
+        display: block;
+        /* clip-path: ; noch ausfüllen*/
+        filter: drop-shadow(2px 4px 6px rgb(20, 8, 77));
+      }
+
+      .plant {
+        top: 31.5%;
+        left: 89%;
+        width: 7.5%;
+        height: auto;
+      }
+
+      .plant img {
+        width: 100%;
+        height: auto;
+        display: block;
+        /* clip-path: ; noch ausfüllen*/
+        filter: drop-shadow(2px 4px 10px rgb(20, 8, 77));
+      }
+
+      .ruler {
+        top: 72.5%;
+        left: 32%;
+        width: 7.5%;
+        height: auto;
+      }
+
+      .ruler img {
+        width: 100%;
+        height: auto;
+        display: block;
+        /* clip-path: ; noch ausfüllen*/
+        filter: drop-shadow(2px 4px 10px rgb(20, 8, 77));
+      }
+
+      .board-my-story {
+        top: 15%;
+        left: 50%;
+        width: 31%;
+        height: auto;
+      }
+
+      .board-my-story img {
+        width: 100%;
+        height: auto;
+        display: block;
+        /* clip-path: ; noch ausfüllen*/
+        filter: drop-shadow(2px 4px 10px rgb(20, 8, 77));
+      }
+
+      .booklet {
+        top: 73.5%;
+        left: 50%;
+        width: 16%;
+        height: auto;
+      }
+
+      .booklet img {
+        width: 100%;
+        height: auto;
+        display: block;
+        /* clip-path: ; noch ausfüllen*/
+        filter: drop-shadow(2px 4px 10px rgb(20, 8, 77));
       }
     </style>
   </head>
@@ -143,38 +227,87 @@
     <img class="overlay-img" src="" alt="Deutschraum mit offener Tür" />
       -->
 
+      <!--
       <div>
         <div>
           <button id="WhichLetterToStart"></button>
           <button id="Buchstabensalat"></button>
         </div>
-      </div>
+      </div> -->
 
-      <a href="#" class="clickable-element alphabet">
+      <a
+        href="../german/Letter/WhichLetterToStart.html"
+        class="clickable-element alphabet"
+      >
         <img
           src="../../../../pictures/schlaupause_deutsch_alphabet_freigestellt.png"
           alt="Alphabet-Poster"
+        />
+      </a>
+
+      <a
+        href="../german/Letter/WhichLetterToStart.html"
+        class="clickable-element bowl"
+      >
+        <img
+          src="../../../../pictures/schlaupause_deutsch_schüssel_freigestellt.png"
+          alt="Schüssel"
+        />
+      </a>
+
+      <a href="#" class="clickable-element plant">
+        <img
+          src="../../../../pictures/schlaupause_deutsch_pflanze_freigestellt.png"
+          alt="Pflanze"
+        />
+      </a>
+
+      <a href="#" class="clickable-element ruler">
+        <img
+          src="../../../../pictures/schlaupause_deutsch_lineal_freigestellt.png"
+          alt="Lineal"
+        />
+      </a>
+
+      <a href="#" class="clickable-element board-my-story">
+        <img
+          src="../../../../pictures/schlaupause_deutsch_geschichte_freigestellt.png"
+          alt="Tafel mit Aufschrift 'Meine Geschichte'"
+        />
+      </a>
+
+      <a href="#" class="clickable-element booklet">
+        <img
+          src="../../../../pictures/schlaupause_deutsch_heft_freigestellt.png"
+          alt="Heft"
         />
       </a>
     </div>
 
     <script>
       const backButton = document.getElementById("backBtn");
+      const aAlphabet = document.querySelector(".alphabet");
+      const aBowl = document.querySelector(".bowl");
+
       backButton.onclick = () => {
         window.location.href = "../../mainDownstairs.html";
       };
-      const whichLetterToStart = document.getElementById("WhichLetterToStart");
-      whichLetterToStart.onclick = () => {
+
+      aAlphabet.addEventListener("click", (event) => {
+        event.preventDefault(); // verhindert bei a-Elementen das Standardverhalten des Links (Seitenwechsel)
+
         setTimeout(() => {
-          window.location.href = "./WhichLetterToStart/whichletterstart.html";
+          window.location.href = "./Letter/WhichLetterToStart.html";
         }, 1000);
-      };
-      const buchstabensalat = document.getElementById("Buchstabensalat");
-      buchstabensalat.onclick = () => {
+      });
+
+      aBowl.addEventListener("click", (event) => {
+        event.preventDefault();
+
         setTimeout(() => {
           window.location.href = "./Buchstabensalat/buchstabensalat.html";
         }, 1000);
-      };
+      });
     </script>
   </body>
 </html>
