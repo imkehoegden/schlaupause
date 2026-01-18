@@ -73,6 +73,7 @@
         height: auto;
         display: block;
         clip-path: circle(50%);
+        filter: drop-shadow(2px 4px 6px rgba(20, 8, 77));
       }
 
       .bench {
@@ -85,6 +86,8 @@
         width: 100%;
         height: auto;
         display: block;
+        /*clip-path: ; noch einfügen*/
+        filter: drop-shadow(2px 4px 6px rgba(20, 8, 77));
       }
     </style>
   </head>
@@ -131,7 +134,7 @@
       const overlayImg = document.querySelector(".overlay-img");
       const aBall = document.querySelector(".ball");
 
-      aDoor.addEventListener("click", function (event) {
+      aDoor.addEventListener("click", (event) => {
         event.preventDefault(); // verhindert bei a-Elementen das Standardverhalten des Links (Seitenwechsel)
 
         overlayImg.classList.add("active");
@@ -141,12 +144,12 @@
         }, 1000);
       });
 
-      aBall.addEventListener("click", function (event) {
+      aBall.addEventListener("click", (event) => {
         event.preventDefault();
 
         setTimeout(() => {
           window.location.href = "./fangDenBall/fangDenBall.html";
-        }, 200);
+        }, 1000);
       });
     </script>
   </body>
