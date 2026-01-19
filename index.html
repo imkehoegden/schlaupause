@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Startseite SchlauPause</title>
+    <title>Startseite schlaupause</title>
     <style>
       .container {
         /* Containergröße = Bildgröße. Sonst waren die clickable Elements nicht zu positionieren */
@@ -39,58 +39,63 @@
         position: absolute;
         cursor: pointer;
         z-index: 10;
-        /* transform-origin: center; */
         transition: transform 0.15s ease;
       }
 
       .clickable-element:hover {
         transform: scale(1.1);
-        /* box-shadow: 0 0 20px rgba(10, 9, 100, 0.9); */
       }
 
-      .door {
+      #door {
         left: 28.1%;
         top: 52.4%;
         width: 10.7%;
-        height: 18%;
+        height: 14%;
+        position: absolute;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
       }
 
-      /*
-      .door img {
+      #ball {
+        position: absolute;
+        top: 77%;
+        left: 53.4%;
+        width: 5.9%;
+        height: auto;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+
+      #ball img {
         width: 100%;
         height: auto;
         display: block;
-      } */
-
-      .ball {
-        left: 53.7%;
-        top: 77.5%;
-        width: 4.5%;
-      }
-
-      .ball img {
-        width: 100%;
-        height: auto;
-        display: block;
-        clip-path: circle(50%);
+        /*clip-path: circle(50%);*/
         filter: drop-shadow(2px 4px 6px rgba(20, 8, 77));
       }
 
-      .bench {
-        left: 47.5%;
+      #bench {
+        position: absolute;
         top: 64%;
-        width: 10.2%;
+        left: 47.5%;
+        width: 10.5%;
+        height: auto;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
       }
 
-      .bench img {
+      #bench img {
         width: 100%;
         height: auto;
         display: block;
-        /*clip-path: ; noch einfügen*/
         filter: drop-shadow(2px 4px 6px rgba(20, 8, 77));
       }
     </style>
   </head>
+
   <body>
     <div class="container">
       <img
@@ -105,38 +110,28 @@
         alt="Schulhaus Tür offen"
       />
 
-      <a
-        class="clickable-element door"
-        aria-label="über diesen Anker ist das Innere des Schulhauses zu erreichen"
-      >
-        <!--<img
-          src="../pictures/schlaupause_schulhaus_tuer_freigestellt_gross.png"
-          alt="Eingang zur Schule"
-        />-->
-      </a>
+      <button id="door"></button>
 
-      <a href="#" class="clickable-element bench">
+      <button id="bench" class="clickable-element">
         <img
           src="./pictures/schlaupause_schulhaus_bank_freigestellt_gross.png"
           alt="Ball"
         />
-      </a>
+      </button>
 
-      <a href="#" class="clickable-element ball">
+      <button id="ball" class="clickable-element">
         <img
           src="./pictures/schlaupause_schulhaus_ball_freigestellt_gross.png"
           alt="Ball"
         />
-      </a>
+      </button>
     </div>
     <script>
-      const aDoor = document.querySelector(".door");
+      const door = document.getElementById("door");
       const overlayImg = document.querySelector(".overlay-img");
-      const aBall = document.querySelector(".ball");
+      const ball = document.getElementById("ball");
 
-      aDoor.addEventListener("click", (event) => {
-        event.preventDefault(); // verhindert bei a-Elementen das Standardverhalten des Links (Seitenwechsel)
-
+      door.addEventListener("click", (event) => {
         overlayImg.classList.add("active");
 
         setTimeout(() => {
@@ -144,9 +139,7 @@
         }, 1000);
       });
 
-      aBall.addEventListener("click", (event) => {
-        event.preventDefault();
-
+      ball.addEventListener("click", (event) => {
         setTimeout(() => {
           window.location.href =
             "./school/outside/fangDenBall/fangDenBall.html";
