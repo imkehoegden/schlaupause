@@ -12,16 +12,6 @@
         overflow: hidden;
       }
 
-      .background-img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        margin: 0 auto;
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-      }
-
       #backBtn {
         position: fixed;
         top: 20px;
@@ -36,12 +26,41 @@
         z-index: 1000;
       }
 
+      #backBtn:hover {
+        transform: scale(1.1);
+      }
+
+      .container {
+        /* Containergröße = Bildgröße. Sonst waren die clickable Elements nicht zu positionieren */
+        position: relative;
+        margin: 0 auto;
+        aspect-ratio: 3 / 2; /* damit der Container skalierbar und die Overlays korrekt bleiben. */
+      }
+
+      .background-img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .clickable-element {
+        position: absolute;
+        cursor: pointer;
+        z-index: 10;
+        /* transform-origin: center; */
+        transition: transform 0.15s ease;
+      }
+
+      .clickable-element:hover {
+        transform: scale(1.1);
+      }
+
       #Plus {
         position: absolute;
         top: 25%;
-        left: 27%;
-        width: 10%;
-        height: 15%;
+        left: 25%;
+        width: 13%;
+        height: auto;
         background-color: transparent;
         border: none;
         cursor: pointer;
@@ -49,15 +68,17 @@
 
       #Plus img {
         width: 100%;
-        height: 100%;
+        height: auto;
+        display: block;
+        filter: drop-shadow(2px 4px 6px rgb(20, 8, 77));
       }
 
       #Minus {
         position: absolute;
         top: 25%;
-        left: 40%;
-        width: 10%;
-        height: 15%;
+        left: 39%;
+        width: 13%;
+        height: auto;
         background-color: transparent;
         border: none;
         cursor: pointer;
@@ -65,74 +86,238 @@
 
       #Minus img {
         width: 100%;
-        height: 100%;
+        height: auto;
+        display: block;
+        filter: drop-shadow(2px 4px 6px rgb(20, 8, 77));
       }
 
       #Mengen {
         position: absolute;
-        top: 60%;
-        left: 85%;
-        width: 10%;
-        height: 15%;
+        top: 58.5%;
+        left: 82.3%;
+        width: 15%;
+        height: auto;
         background-color: transparent;
         border: none;
         cursor: pointer;
       }
+
+      #Mengen img {
+        width: 100%;
+        height: auto;
+        display: block;
+        filter: drop-shadow(2px 4px 6px rgb(20, 8, 77));
+      }
+
+      #Papierflieger {
+        position: absolute;
+        top: 38%;
+        left: 49%;
+        width: 10%;
+        height: auto;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+
+      #Papierflieger img {
+        width: 100%;
+        height: auto;
+        display: block;
+        filter: drop-shadow(2px 4px 6px rgb(20, 8, 77));
+      }
+
+      #Krokodil {
+        position: absolute;
+        top: 57.5%;
+        left: 9.5%;
+        width: 18.5%;
+        height: auto;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+
+      #Krokodil img {
+        width: 100%;
+        height: auto;
+        display: block;
+        filter: drop-shadow(2px 4px 6px rgb(20, 8, 77));
+      }
+
+      #Würfel {
+        position: absolute;
+        top: 50%;
+        left: 53%;
+        width: 11%;
+        height: auto;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+
+      #Würfel img {
+        width: 100%;
+        height: auto;
+        display: block;
+        filter: drop-shadow(2px 4px 6px rgb(20, 8, 77));
+      }
+
+      #Formen {
+        position: absolute;
+        top: 15%;
+        left: 63%;
+        width: 11%;
+        height: auto;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+
+      #Formen img {
+        width: 100%;
+        height: auto;
+        display: block;
+        filter: drop-shadow(2px 4px 6px rgb(20, 8, 77));
+      }
+
+      #Würfel-Fensterbank {
+        position: absolute;
+        top: 36%;
+        left: 0.5%;
+        width: 12%;
+        height: auto;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+
+      #Würfel-Fensterbank img {
+        width: 100%;
+        height: auto;
+        display: block;
+        filter: drop-shadow(2px 4px 6px rgb(20, 8, 77));
+      }
+
+      #Schreibmappe {
+        position: absolute;
+        top: 74%;
+        left: 59.5%;
+        width: 15.5%;
+        height: auto;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+
+      #Schreibmappe img {
+        width: 100%;
+        height: auto;
+        display: block;
+        filter: drop-shadow(2px 4px 6px rgb(20, 8, 77));
+      }
     </style>
   </head>
   <body>
-    <button id="backBtn">← Zurück</button>
-    <img
-      class="background-img"
-      src="../../../../pictures/Matheraum.png"
-      alt="Illustration eines Mathematik-Klassenraums"
-    />
+    <div class="container">
+      <button id="backBtn">← Zurück</button>
+      <img
+        class="background-img"
+        src="../../../../pictures/Matheraum.png"
+        alt="Illustration eines Mathematik-Klassenraums"
+      />
 
-    <div>
-      <div>
-        <button id="Plus">
-          <img
-            src="../../../../pictures/schlaupause_mathe_plus_freigestellt.png"
-            alt="Additionsaufgaben auf Tafel"
-          />
-        </button>
-        <button id="Minus">
-          <img
-            src="../../../../pictures/schlaupause_mathe_minus_freigestellt.png"
-            alt="Subtraktionsaufgaben auf Tafel"
-          />
-        </button>
-        <button id="Mengen">
-          <img
-            src="../../../../pictures/schlaupause_mathe_rechenschieber_freigestellt.png"
-            alt="Rechenschieber zum Mengen Zuordnen"
-          />
-        </button>
-      </div>
+      <button id="Plus" class="clickable-element">
+        <img
+          src="../../../../pictures/schlaupause_mathe_plus_freigestellt.png"
+          alt="Additionsaufgaben auf Tafel"
+        />
+      </button>
+
+      <button id="Minus" class="clickable-element">
+        <img
+          src="../../../../pictures/schlaupause_mathe_minus_freigestellt.png"
+          alt="Subtraktionsaufgaben auf Tafel"
+        />
+      </button>
+
+      <button id="Mengen" class="clickable-element">
+        <img
+          src="../../../../pictures/schlaupause_mathe_rechenschieber_freigestellt.png"
+          alt="Rechenschieber zum Mengen Zuordnen"
+        />
+      </button>
+
+      <button id="Papierflieger" class="clickable-element">
+        <img
+          src="../../../../pictures/schlaupause_mathe_papierflieger_freigestellt.png"
+          alt="Papierflieger"
+        />
+      </button>
+
+      <button id="Krokodil" class="clickable-element">
+        <img
+          src="../../../../pictures/schlaupause_mathe_krokodil_freigestellt.png"
+          alt="Krokodil"
+        />
+      </button>
+
+      <button id="Würfel" class="clickable-element">
+        <img
+          src="../../../../pictures/schlaupause_mathe_würfel_freigestellt.png"
+          alt="Würfel"
+        />
+      </button>
+
+      <button id="Formen" class="clickable-element">
+        <img
+          src="../../../../pictures/schlaupause_mathe_geo-formen_freigestellt.png"
+          alt="Formen"
+        />
+      </button>
+
+      <button id="Würfel-Fensterbank" class="clickable-element">
+        <img
+          src="../../../../pictures/schlaupause_mathe_123-würfel-fensterbank_freigestellt.png"
+          alt="Würfel-Fensterbank"
+        />
+      </button>
+
+      <button id="Schreibmappe" class="clickable-element">
+        <img
+          src="../../../../pictures/schlaupause_mathe_schreibmappe_freigestellt.png"
+          alt="Schreibmappe"
+        />
+      </button>
     </div>
+
     <script>
       const backButton = document.getElementById("backBtn");
-      backButton.onclick = () => {
-        window.location.href = "../../mainDownstairs.html";
-      };
       const plusGames = document.getElementById("Plus");
-      plusGames.onclick = () => {
+      const minusGames = document.getElementById("Minus");
+      const mengenGames = document.getElementById("Mengen");
+
+      backButton.addEventListener("click", () => {
+        window.location.href = "../../mainDownstairs.html";
+      });
+
+      plusGames.addEventListener("click", () => {
         setTimeout(() => {
           window.location.href = "./Plus/plusaufgabenauswahl.html";
         }, 1000);
-      };
-      const minusGames = document.getElementById("Minus");
-      minusGames.onclick = () => {
+      });
+
+      minusGames.addEventListener("click", () => {
         setTimeout(() => {
           window.location.href = "./Minus/minusaufgabenauswahl.html";
         }, 1000);
-      };
-      const mengenGames = document.getElementById("Mengen");
-      mengenGames.onclick = () => {
+      });
+
+      mengenGames.addEventListener("click", () => {
         setTimeout(() => {
           window.location.href = "./Mengen/mengenZuordnen.html";
         }, 1000);
-      };
+      });
     </script>
   </body>
 </html>
