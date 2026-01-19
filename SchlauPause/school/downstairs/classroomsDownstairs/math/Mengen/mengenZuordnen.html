@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Äpfel zählen lernen</title>
+    <style>
+      body {
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background: #1f4d2b;
+        background-image:
+          radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+        background-size:
+          4px 4px,
+          6px 6px;
+        font-family: sans-serif;
+      }
+
+      #question {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 64px;
+        font-weight: bold;
+        color: #f5f5f5;
+        padding: 20px 40px;
+        background: transparent;
+        border-radius: 12px;
+      }
+
+      .apple-btn {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        font-size: 36px;
+        border: 2px dashed #fff;
+        border-radius: 12px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        transition:
+          transform 0.2s,
+          opacity 0.2s;
+      }
+
+      .apple-btn:hover {
+        transform: scale(1.15);
+      }
+
+      .apple-btn:disabled {
+        opacity: 0.4;
+        cursor: default;
+      }
+
+      #removeBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        font-size: 36px;
+        padding: 10px 15px;
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+        border: 2px solid #fff;
+        border-radius: 12px;
+        cursor: pointer;
+        transition:
+          transform 0.2s,
+          background 0.2s;
+        z-index: 1000;
+      }
+
+      #removeBtn:hover {
+        transform: scale(1.1);
+        background: rgba(255, 255, 255, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="question">?</div>
+    <button id="removeBtn">- 🍎</button>
+
+    <script>
+      const icon = "🍎";
+      const totalApples = 10;
+      let targetNumber = 0;
+      let clickedApples = 0;
+      let checkTimer;
+
+      const removeBtn = document.getElementById("removeBtn");
+
+      // --- Zufallszahl 1-10 generieren ---
+      function generateNumber() {
+        targetNumber = Math.floor(Math.random() * 10) + 1;
+        clickedApples = 0;
+        updateQuestion();
+      }
+
+      // --- Überlappung prüfen ---
+      function isOverlap(r1, r2) {
+        return !(
+          r1.right < r2.left ||
+          r1.left > r2.right ||
+          r1.bottom < r2.top ||
+          r1.top > r2.bottom
+        );
+      }
+
+      // --- Buttons zufällig platzieren ---
+      function generateButtons() {
+        document.querySelectorAll(".apple-btn").forEach((b) => b.remove());
+        const existingRects = [];
+        const questionDiv = document.getElementById("question");
+        const qRect = questionDiv.getBoundingClientRect();
+        const removeRect = removeBtn.getBoundingClientRect();
+
+        for (let i = 0; i < totalApples; i++) {
+          const btn = document.createElement("button");
+          btn.className = "apple-btn";
+          btn.textContent = icon;
+
+          let x = 0,
+            y = 0,
+            attempts = 0;
+          while (attempts++ < 100) {
+            x = Math.random() * (window.innerWidth - 60);
+            y = Math.random() * (window.innerHeight - 60);
+            const rect = { left: x, top: y, right: x + 60, bottom: y + 60 };
+            const overlaps = existingRects.some((r) => isOverlap(r, rect));
+            const overlapsQuestion = isOverlap(rect, qRect);
+            const overlapsRemoveBtn = isOverlap(rect, removeRect);
+            if (!overlaps && !overlapsQuestion && !overlapsRemoveBtn) break;
+          }
+
+          btn.style.left = x + "px";
+          btn.style.top = y + "px";
+          existingRects.push({
+            left: x,
+            top: y,
+            right: x + 60,
+            bottom: y + 60,
+          });
+
+          btn.onclick = () => {
+            clickedApples++;
+            btn.remove();
+            updateQuestion();
+            resetCheckTimer();
+          };
+
+          document.body.appendChild(btn);
+        }
+      }
+
+      // --- Anzeige hinter = aktualisieren ---
+      function updateQuestion() {
+        document.getElementById("question").textContent =
+          targetNumber + " = " + icon.repeat(clickedApples);
+      }
+
+      // --- Timer zurücksetzen ---
+      function resetCheckTimer() {
+        if (checkTimer) clearTimeout(checkTimer);
+        if (clickedApples === targetNumber) {
+          checkTimer = setTimeout(() => startRound(), 3000);
+        }
+      }
+
+      // --- Entfernt einen Apfel ---
+      function removeApple() {
+        if (clickedApples > 0) {
+          clickedApples--;
+          updateQuestion();
+          resetCheckTimer();
+        }
+      }
+
+      removeBtn.onclick = removeApple;
+
+      // --- Neue Runde starten ---
+      function startRound() {
+        generateNumber();
+        generateButtons();
+      }
+
+      // --- Start ---
+      window.onload = startRound;
+    </script>
+  </body>
+</html>
