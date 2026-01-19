@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Im Schulhaus</title>
     <style>
+      .container {
+        /* Containergröße = Bildgröße. Sonst waren die clickable Elements nicht zu positionieren */
+        position: relative;
+        margin: 0 auto;
+        aspect-ratio: 3 / 2; /* damit der Container skalierbar bleibt und die Overlays korrekt bleiben. */
+      }
+
       img {
         position: absolute;
         top: 0;
@@ -15,12 +22,15 @@
         opacity: 0;
         transition: opacity 0.5s ease-in-out;
       }
+
       #default {
         opacity: 1;
       }
+
       #math {
         opacity: 0;
       }
+
       #german {
         opacity: 0;
       }
@@ -35,12 +45,13 @@
         height: 45%;
         cursor: pointer;
       }
+
       #Mathetür {
         background-color: transparent;
         border: none;
         position: absolute;
         top: 30%;
-        left: 6%;
+        left: 5%;
         width: 14%;
         height: 50%;
         cursor: pointer;
@@ -67,11 +78,24 @@
     </style>
   </head>
   <body>
-    <button id="backBtn">← Zurück</button>
-    <img id="default" src="../../pictures/FlurZu.png" alt="" />
-    <img id="math" src="../../pictures/MathetürOffen.png" alt="" />
-    <img id="german" src="../../pictures/DeutschtürOffen.png" alt="" />
-    <div>
+    <div class="container">
+      <button id="backBtn">← Zurück</button>
+      <img
+        id="default"
+        src="../../pictures/FlurZu_rand-abgeschnitten.png"
+        alt=""
+      />
+      <img
+        id="math"
+        src="../../pictures/MathetürOffen_rand-abgeschnitten.png"
+        alt=""
+      />
+      <img
+        id="german"
+        src="../../pictures/DeutschtürOffen_rand-abgeschnitten.png"
+        alt=""
+      />
+
       <div>
         <button id="Mathetür"></button>
         <button id="Deutschtür"></button>
