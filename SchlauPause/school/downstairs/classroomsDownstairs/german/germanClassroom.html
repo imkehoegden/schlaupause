@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mathematikraum</title>
+
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        overflow: hidden;
+      }
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 0 auto;
+        width: 100%;
+        height: 100%;
+      }
+
+      #backBtn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        padding: 10px 18px;
+        font-size: 20px;
+        border-radius: 10px;
+        border: 3px solid white;
+        background: rgba(0, 0, 0, 0.4);
+        color: white;
+        cursor: pointer;
+        z-index: 1000;
+      }
+
+      #Plus {
+        position: absolute;
+        top: 25%;
+        left: 27%;
+        width: 10%;
+        height: 15%;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+      #Minus {
+        position: absolute;
+        top: 25%;
+        left: 40%;
+        width: 10%;
+        height: 15%;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="backBtn">← Zurück</button>
+    <img src="../../../../pictures/Matheraum.png" alt="" />
+
+    <div>
+      <div>
+        <button id="Plus"></button>
+        <button id="Minus"></button>
+      </div>
+    </div>
+    <script>
+      const backButton = document.getElementById("backBtn");
+      backButton.onclick = () => {
+        window.location.href = "../../mainDownstairs.html";
+      };
+      const plusGames = document.getElementById("Plus");
+      plusGames.onclick = () => {
+        setTimeout(() => {
+          window.location.href = "./Plus/plusaufgabenauswahl.html";
+        }, 1000);
+      };
+      const minusGames = document.getElementById("Minus");
+      minusGames.onclick = () => {
+        setTimeout(() => {
+          window.location.href = "./Minus/minusaufgabenauswahl.html";
+        }, 1000);
+      };
+    </script>
+  </body>
+</html>
