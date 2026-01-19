@@ -1,24 +1,26 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Minus rechnen im Zahlenraum bis 20 ohne Zehnerübergang</title>
+    <title>Plus rechnen im Zahlenraum bis 10</title>
 
     <style>
       body {
         margin: 0;
-        width: 100vw;
         height: 100vh;
-        overflow: hidden;
-
-        background: #1f4d2b;
-        background-image: radial-gradient(
-            rgba(255, 255, 255, 0.03) 1px,
-            transparent 1px
-          ),
-          radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-        background-size: 4px 4px, 6px 6px;
+      }
+      #board {
+        position: absolute;
+        top: 20%;
+        left: 10%;
+        width: 80%;
+        height: 55%;
+      }
+      img {
+        margin: 0 auto;
+        width: 100%;
+        height: 100%;
       }
 
       #question {
@@ -44,7 +46,9 @@
         font-weight: bold;
         color: #ffffff;
         text-shadow: 0 0 2px rgba(255, 255, 255, 0.7);
-        transition: transform 0.2s, opacity 0.2s;
+        transition:
+          transform 0.2s,
+          opacity 0.2s;
       }
 
       .answer:hover {
@@ -54,11 +58,33 @@
       .answer:active {
         opacity: 0.6;
       }
+
+      #backBtn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        padding: 10px 18px;
+        font-size: 20px;
+        border-radius: 10px;
+        border: 3px solid white;
+        background: rgba(0, 0, 0, 0.4);
+        color: white;
+        cursor: pointer;
+        z-index: 1000;
+      }
+
+      #backBtn:hover {
+        transform: scale(1.1);
+      }
     </style>
   </head>
 
   <body>
-    <div id="question">?</div>
+    <button id="backBtn">← Zurück</button>
+    <img src="../../../../../pictures/Tafel.jpeg" alt="" />
+    <div id="board">
+      <div id="question">?</div>
+    </div>
 
     <script>
       (function () {
@@ -90,6 +116,8 @@
         }
 
         function placeAnswersAwayFromQuestion(btn) {
+          const board = document.getElementById("board");
+          const boardRect = board.getBoundingClientRect();
           const questionBox = document
             .getElementById("question")
             .getBoundingClientRect(); // Holen des Begrenzungsrechtecks der Frage
@@ -98,7 +126,7 @@
           btn.style.visibility = "hidden";
 
           const existingButtons = Array.from(
-            document.querySelectorAll(".answer") // Holen aller vorhandenen Antwort-Buttons
+            document.querySelectorAll(".answer"), // Holen aller vorhandenen Antwort-Buttons
           )
             .filter((b) => b !== btn) // Ausschließen des aktuellen Buttons
             .map((b) => b.getBoundingClientRect()); // getBoundingClientRect() gibt die Position und Größe eines Elements relativ zum Ansichtsfenster zurück
@@ -108,8 +136,8 @@
           const buttonHeight =
             btn.offsetHeight || btn.getBoundingClientRect().height || 80;
 
-          const maxX = Math.max(window.innerWidth - buttonWidth, 0); // 0 bedeutet, dass der Button nicht größer als das Fenster sein darf - wenn ich hier 10 nehme, dann kann der Button 10 Pixel links und rechts über den Rand hinausragen
-          const maxY = Math.max(window.innerHeight - buttonHeight, 0);
+          const maxX = Math.max(boardRect.width - buttonWidth, 0); // 0 bedeutet, dass der Button nicht größer als das Fenster sein darf - wenn ich hier 10 nehme, dann kann der Button 10 Pixel links und rechts über den Rand hinausragen
+          const maxY = Math.max(boardRect.height - buttonHeight, 0);
 
           let x = 0,
             y = 0,
@@ -119,20 +147,20 @@
             x = Math.random() * maxX;
             y = Math.random() * maxY;
             const potentialSolution = {
-              left: x,
-              right: x + buttonWidth, //damit der Button nicht zu weit rechts ist
-              top: y,
-              bottom: y + buttonHeight,
+              left: boardRect.left + x,
+              right: boardRect.left + x + buttonWidth, //damit der Button nicht zu weit rechts ist
+              top: boardRect.top + y,
+              bottom: boardRect.top + y + buttonHeight,
             }; //
 
             const overlapQuestion = checkAnswerOverlap(
               potentialSolution,
-              questionBox
+              questionBox,
             );
             const overlapButton = existingButtons.some(
               (
-                b //.some prüft, ob mindestens ein Element im Array die Bedingung erfüllt, in diesem Fall ob es überlappt, alternativ könnte man auch .find verwenden. Der Unterschied ist, dass .some einen booleschen Wert zurückgibt (true/false), während .find das erste Element zurückgibt, das die Bedingung erfüllt, oder undefined, wenn kein solches Element gefunden wird.
-              ) => checkAnswerOverlap(potentialSolution, b) // prüft Überlappung mit jedem vorhandenen Button
+                b, //.some prüft, ob mindestens ein Element im Array die Bedingung erfüllt, in diesem Fall ob es überlappt, alternativ könnte man auch .find verwenden. Der Unterschied ist, dass .some einen booleschen Wert zurückgibt (true/false), während .find das erste Element zurückgibt, das die Bedingung erfüllt, oder undefined, wenn kein solches Element gefunden wird.
+              ) => checkAnswerOverlap(potentialSolution, b), // prüft Überlappung mit jedem vorhandenen Button
             );
 
             if (!overlapQuestion && !overlapButton) break;
@@ -178,7 +206,7 @@
             const btn = document.createElement("button");
             btn.className = "answer";
             btn.textContent = value;
-
+            board.appendChild(btn);
             placeAnswersAwayFromQuestion(btn);
 
             btn.onclick = () => {
@@ -202,12 +230,14 @@
                 }, 500);
               }
             };
-
-            document.body.appendChild(btn);
           });
         }
 
         window.onload = startGame;
+        const backButton = document.getElementById("backBtn");
+        backButton.onclick = () => {
+          window.location.href = "./minusaufgabenauswahl.html";
+        };
       })();
     </script>
   </body>
