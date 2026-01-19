@@ -1,16 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mathematikraum</title>
+    <title>Deutschraum</title>
 
     <style>
+      /* Melas Styles: 
       body {
         margin: 0;
         height: 100vh;
         overflow: hidden;
       }
+
       img {
         position: absolute;
         top: 0;
@@ -18,7 +20,21 @@
         margin: 0 auto;
         width: 100%;
         height: 100%;
-      }
+      }*/
+
+      /* Versuch Imke:
+      body {
+        margin: 0;
+        width: 100%; 100 % der Breite des Elternelements (HTML). Damit ist Body so breit wie Viewport
+        height: 100%; 100 % der Höhe des Elternelements (HTML). Damit ist Body so hoch wie Viewport 
+        overflow: hidden; Verhindert Scrollbalken 
+      } 
+        
+      background-image {
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+      } */
 
       #backBtn {
         position: fixed;
@@ -32,9 +48,57 @@
         color: white;
         cursor: pointer;
         z-index: 1000;
+        transition: transform 0.15s ease;
       }
 
-      #Plus {
+      #backBtn:hover {
+        transform: scale(1.1);
+      }
+
+      .container {
+        /* Containergröße = Bildgröße. Sonst waren die clickable Elements nicht zu positionieren */
+        max-width: 3000px;
+        position: relative;
+        margin: 0 auto;
+        aspect-ratio: 3 / 2; /* damit der Container skalierbar und die Overlays korrekt bleiben. */
+      }
+
+      .background-img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .overlay-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.6s ease;
+        z-index: 5;
+      }
+
+      .overlay-img.active {
+        opacity: 1;
+      }
+
+      .clickable-element {
+        position: absolute;
+        cursor: pointer;
+        z-index: 10;
+        /* transform-origin: center; */
+        transition: transform 0.15s ease;
+      }
+
+      .clickable-element:hover {
+        transform: scale(1.1);
+      }
+
+      /*
+      #WhichLetterToStart {
         position: absolute;
         top: 25%;
         left: 27%;
@@ -44,7 +108,8 @@
         border: none;
         cursor: pointer;
       }
-      #Minus {
+
+      #Buchstabensalat {
         position: absolute;
         top: 25%;
         left: 40%;
@@ -53,36 +118,196 @@
         background-color: transparent;
         border: none;
         cursor: pointer;
+      }*/
+
+      .alphabet {
+        top: 12.5%;
+        left: 5%;
+        width: 30%;
+        height: auto;
+      }
+
+      .alphabet img {
+        width: 100%;
+        height: auto;
+        display: block;
+        /* clip-path: ; noch ausfüllen*/
+        filter: drop-shadow(2px 4px 6px rgb(20, 8, 77));
+      }
+
+      .bowl {
+        top: 52%;
+        left: 58%;
+        width: 10%;
+        height: auto;
+      }
+
+      .bowl img {
+        width: 100%;
+        height: auto;
+        display: block;
+        /* clip-path: ; noch ausfüllen*/
+        filter: drop-shadow(2px 4px 6px rgb(20, 8, 77));
+      }
+
+      .plant {
+        top: 31.5%;
+        left: 89%;
+        width: 7.5%;
+        height: auto;
+      }
+
+      .plant img {
+        width: 100%;
+        height: auto;
+        display: block;
+        /* clip-path: ; noch ausfüllen*/
+        filter: drop-shadow(2px 4px 10px rgb(20, 8, 77));
+      }
+
+      .ruler {
+        top: 72.5%;
+        left: 32%;
+        width: 7.5%;
+        height: auto;
+      }
+
+      .ruler img {
+        width: 100%;
+        height: auto;
+        display: block;
+        /* clip-path: ; noch ausfüllen*/
+        filter: drop-shadow(2px 4px 10px rgb(20, 8, 77));
+      }
+
+      .board-my-story {
+        top: 15%;
+        left: 50%;
+        width: 31%;
+        height: auto;
+      }
+
+      .board-my-story img {
+        width: 100%;
+        height: auto;
+        display: block;
+        /* clip-path: ; noch ausfüllen*/
+        filter: drop-shadow(2px 4px 10px rgb(20, 8, 77));
+      }
+
+      .booklet {
+        top: 73.5%;
+        left: 50%;
+        width: 16%;
+        height: auto;
+      }
+
+      .booklet img {
+        width: 100%;
+        height: auto;
+        display: block;
+        /* clip-path: ; noch ausfüllen*/
+        filter: drop-shadow(2px 4px 10px rgb(20, 8, 77));
       }
     </style>
   </head>
   <body>
-    <button id="backBtn">← Zurück</button>
-    <img src="../../../../pictures/Matheraum.png" alt="" />
+    <div class="container">
+      <button id="backBtn">← Zurück</button>
 
-    <div>
+      <img
+        class="background-img"
+        src="../../../../pictures/schlaupause_deutschraum_neu_gross.png"
+        alt="Illustration eines Deutschraums einer ersten Klasse"
+      />
+
+      <!--
+    Hier könnte noch ein Overlay-Image eingefügt werden für eine Animation beim Betreten des Raums.
+
+    <img class="overlay-img" src="" alt="Deutschraum mit offener Tür" />
+      -->
+
+      <!--
       <div>
-        <button id="Plus"></button>
-        <button id="Minus"></button>
-      </div>
+        <div>
+          <button id="WhichLetterToStart"></button>
+          <button id="Buchstabensalat"></button>
+        </div>
+      </div> -->
+
+      <a
+        href="../german/Letter/WhichLetterToStart.html"
+        class="clickable-element alphabet"
+      >
+        <img
+          src="../../../../pictures/schlaupause_deutsch_alphabet_freigestellt.png"
+          alt="Alphabet-Poster"
+        />
+      </a>
+
+      <a
+        href="../german/Letter/WhichLetterToStart.html"
+        class="clickable-element bowl"
+      >
+        <img
+          src="../../../../pictures/schlaupause_deutsch_schüssel_freigestellt.png"
+          alt="Schüssel"
+        />
+      </a>
+
+      <a href="#" class="clickable-element plant">
+        <img
+          src="../../../../pictures/schlaupause_deutsch_pflanze_freigestellt.png"
+          alt="Pflanze"
+        />
+      </a>
+
+      <a href="#" class="clickable-element ruler">
+        <img
+          src="../../../../pictures/schlaupause_deutsch_lineal_freigestellt.png"
+          alt="Lineal"
+        />
+      </a>
+
+      <a href="#" class="clickable-element board-my-story">
+        <img
+          src="../../../../pictures/schlaupause_deutsch_geschichte_freigestellt.png"
+          alt="Tafel mit Aufschrift 'Meine Geschichte'"
+        />
+      </a>
+
+      <a href="#" class="clickable-element booklet">
+        <img
+          src="../../../../pictures/schlaupause_deutsch_heft_freigestellt.png"
+          alt="Heft"
+        />
+      </a>
     </div>
+
     <script>
       const backButton = document.getElementById("backBtn");
+      const aAlphabet = document.querySelector(".alphabet");
+      const aBowl = document.querySelector(".bowl");
+
       backButton.onclick = () => {
         window.location.href = "../../mainDownstairs.html";
       };
-      const plusGames = document.getElementById("Plus");
-      plusGames.onclick = () => {
+
+      aAlphabet.addEventListener("click", (event) => {
+        event.preventDefault(); // verhindert bei a-Elementen das Standardverhalten des Links (Seitenwechsel)
+
         setTimeout(() => {
-          window.location.href = "./Plus/plusaufgabenauswahl.html";
+          window.location.href = "./Letter/WhichLetterToStart.html";
         }, 1000);
-      };
-      const minusGames = document.getElementById("Minus");
-      minusGames.onclick = () => {
+      });
+
+      aBowl.addEventListener("click", (event) => {
+        event.preventDefault();
+
         setTimeout(() => {
-          window.location.href = "./Minus/minusaufgabenauswahl.html";
+          window.location.href = "./Buchstabensalat/buchstabensalat.html";
         }, 1000);
-      };
+      });
     </script>
   </body>
 </html>
