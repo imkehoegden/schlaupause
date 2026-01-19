@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
   <head>
     <meta charset="UTF-8" />
@@ -149,7 +149,7 @@
           safe = false;
 
         const existingButtons = Array.from(
-          board.querySelectorAll(".answer")
+          board.querySelectorAll(".answer"),
         ).map((b) => b.getBoundingClientRect());
 
         while (!safe) {
@@ -170,7 +170,7 @@
               absX < b.right &&
               absX + bw > b.left &&
               absY < b.bottom &&
-              absY + bh > b.top
+              absY + bh > b.top,
           );
 
           if (!overlapQuestion && !overlapButton) safe = true;
@@ -233,7 +233,7 @@
       window.onload = startGame;
       const backButton = document.getElementById("backBtn");
       backButton.onclick = () => {
-        window.location.href = "../germanClassroomDownstairs.html";
+        window.location.href = "../germanClassroom.html";
       };
     </script>
   </body>

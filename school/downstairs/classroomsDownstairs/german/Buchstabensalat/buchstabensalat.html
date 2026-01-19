@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
   <head>
     <meta charset="UTF-8" />
@@ -295,7 +295,7 @@
           // Die Shake-Animation wird per Klassenvergabe, also in CSS ausgelöst. Die Klasse muss nach Ablauf entfernt werden, damit die Animation bei einem erneuten Fehler wieder abgespielt werden kann.
           setTimeout(() => {
             solutionLetterSlots.forEach((slot) =>
-              slot.classList.remove("shake")
+              slot.classList.remove("shake"),
             );
           }, 500);
         }
@@ -346,6 +346,11 @@
         bowlLettersContainer.appendChild(letterSpan);
         // console.log("Buchstabe wurde entfernt");
       });
+
+      const backButton = document.getElementById("backBtn");
+      backButton.onclick = () => {
+        window.location.href = "../germanClassroom.html";
+      };
 
       updateSolutionSlots();
       showWordInBowl(shuffledBowlLetters);
