@@ -54,6 +54,16 @@
         border: none;
         cursor: pointer;
       }
+      #Mengen {
+        position: absolute;
+        top: 60%;
+        left: 85%;
+        width: 10%;
+        height: 15%;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -64,6 +74,7 @@
       <div>
         <button id="Plus"></button>
         <button id="Minus"></button>
+        <button id="Mengen"></button>
       </div>
     </div>
     <script>
@@ -81,6 +92,12 @@
       minusGames.onclick = () => {
         setTimeout(() => {
           window.location.href = "./Minus/minusaufgabenauswahl.html";
+        }, 1000);
+      };
+      const mengenGames = document.getElementById("Mengen");
+      mengenGames.onclick = () => {
+        setTimeout(() => {
+          window.location.href = "./Mengen/mengenZuordnen.html";
         }, 1000);
       };
     </script>
