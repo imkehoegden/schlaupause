@@ -164,12 +164,22 @@
         document.getElementById("question").textContent =
           targetNumber + " = " + icon.repeat(clickedApples);
       }
-
+      // --- Grüner Rand bei richtiger Anzahl ---
+      function greenBorder() {
+        const questionDiv = document.getElementById("question");
+        questionDiv.style.border = "4px dashed #4CAF50";
+        setTimeout(() => {
+          questionDiv.style.border = "none";
+        }, 800);
+      }
       // --- Timer zurücksetzen ---
       function resetCheckTimer() {
         if (checkTimer) clearTimeout(checkTimer);
         if (clickedApples === targetNumber) {
-          checkTimer = setTimeout(() => startRound(), 3000);
+          checkTimer = setTimeout(() => {
+            greenBorder();
+            setTimeout(() => startRound(), 1000);
+          }, 1000);
         }
       }
 
