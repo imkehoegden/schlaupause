@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fang den Ball!</title>
 
-    <!-- evtl. als Erweiterung: Ball wird schneller im nächsten Level + Level anzeigen? -->
+    <!-- evtl. als Erweiterung: Ball wird schneller im nächsten Level -->
 
     <style>
       body {
@@ -92,8 +92,10 @@
         animation: shake 0.5s ease;
       }
     </style>
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   </head>
+
   <body>
     <a href="../../../index.html"><button id="backBtn">← Zurück</button></a>
 
@@ -121,7 +123,9 @@
       function startGame() {
         counter = 150; // setzt den Counter auf 15 Sekunden bei jedem Spielstart zurück
         counterDisplay.textContent = Math.ceil(counter / 10);
+
         gameInterval = setInterval(moveBall, 1000); // ruft jede Sekunde die Funktion moveBall auf
+
         ballImg.style.left =
           Math.floor(Math.random() * (window.innerWidth - 250)) + "px"; // zufällige Startposition hinzugefügt
         ballImg.style.top =
@@ -143,7 +147,7 @@
         ballImg.style.top = y + "px";
 
         counter = counter - 10;
-        counterDisplay.textContent = Math.ceil(counter / 10); // bei jedem Aufruf wird der Counter um 1 Sekunde reduziert
+        counterDisplay.textContent = Math.floor(counter / 10); // bei jedem Aufruf wird der Counter um 1 Sekunde verringert
       }
 
       function stopGame() {
