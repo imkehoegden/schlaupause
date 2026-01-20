@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fang den Ball!</title>
 
-    <!-- to do: Ball wird schneller im nächsten Level + Level anzeigen? -->
+    <!-- evtl. als Erweiterung: Ball wird schneller im nächsten Level + Level anzeigen? -->
 
     <style>
       body {
@@ -45,9 +45,26 @@
 
       .football-img {
         width: 120px;
-        position: absolute; /* sonst könnten wir es nicht verschieben */
+        position: absolute;
         z-index: 10;
         cursor: pointer;
+      }
+
+      .anzeige-counter {
+        position: fixed;
+        top: 30px;
+        right: 30px;
+        font-size: 30px;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.4);
+        border: 3px solid white;
+        color: white;
+        z-index: 1000;
       }
 
       @keyframes shake {
@@ -86,23 +103,24 @@
         alt="Wiese mit Blumen"
       />
     </div>
+
     <img
       src="../../../pictures/schlaupause_schulhaus_ball_freigestellt_gross.png"
       alt="Fußball"
       class="football-img"
     />
 
+    <div class="anzeige-counter">15</div>
+
     <script>
       const ballImg = document.querySelector(".football-img");
+      const counterDisplay = document.querySelector(".anzeige-counter");
       let gameInterval;
-      let counter = 150; // 15 Sekunden Zeit
-
-      /* evtl. hier erweitern, dass Ball sich in jedem Level schneller bewegt 
-      let level = 1;
-      let moveSpeed = 1000; // Bei erster Runde bewegt sich Ball jede Sekunde
-      const minSpeed = 500; // Ball kann sich maximal alle 500ms bewegen */
+      let counter = 150; // entspricht 15 Sekunden Zeit
 
       function startGame() {
+        counter = 150; // setzt den Counter auf 15 Sekunden bei jedem Spielstart zurück
+        counterDisplay.textContent = Math.ceil(counter / 10);
         gameInterval = setInterval(moveBall, 1000); // ruft jede Sekunde die Funktion moveBall auf
         ballImg.style.left =
           Math.floor(Math.random() * (window.innerWidth - 250)) + "px"; // zufällige Startposition hinzugefügt
@@ -112,8 +130,12 @@
 
       function moveBall() {
         if (counter === 0) {
+          counter = 0;
+          counterDisplay.textContent = 0;
           stopGame();
+          return; // Spiel beenden, wenn der Counter 0 erreicht. -1 Sekunde verhindern
         }
+
         const x = Math.random() * (window.innerWidth - 250);
         const y = Math.random() * (window.innerHeight - 250);
 
@@ -121,6 +143,7 @@
         ballImg.style.top = y + "px";
 
         counter = counter - 10;
+        counterDisplay.textContent = Math.ceil(counter / 10); // bei jedem Aufruf wird der Counter um 1 Sekunde reduziert
       }
 
       function stopGame() {
