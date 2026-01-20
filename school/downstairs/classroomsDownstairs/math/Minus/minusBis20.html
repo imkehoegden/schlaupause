@@ -87,6 +87,7 @@
     </div>
 
     <script>
+      let points = parseInt(localStorage.getItem("points")) || 0;
       (function () {
         const maxSum = 20;
         const answerCount = 5;
@@ -206,6 +207,8 @@
 
             btn.onclick = () => {
               if (value === correct) {
+                points += 1;
+                localStorage.setItem("points", points);
                 btn.style.borderColor = "lime";
                 btn.style.transition = " border 0.3s ease";
                 setTimeout(() => {

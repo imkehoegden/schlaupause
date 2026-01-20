@@ -114,7 +114,7 @@
       let targetNumber = 0;
       let clickedApples = 0;
       let checkTimer;
-
+      let points = parseInt(localStorage.getItem("points")) || 0;
       const removeBtn = document.getElementById("removeBtn");
 
       // --- Zufallszahl 1-10 generieren ---
@@ -206,6 +206,8 @@
       function resetCheckTimer() {
         if (checkTimer) clearTimeout(checkTimer);
         if (clickedApples === targetNumber) {
+          points += 1;
+          localStorage.setItem("points", points);
           checkTimer = setTimeout(() => {
             greenBorder();
             setTimeout(() => startRound(), 1000);

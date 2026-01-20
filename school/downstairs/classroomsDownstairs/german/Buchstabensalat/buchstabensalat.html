@@ -284,6 +284,9 @@
         const correctWord = targetWordLetters.join("");
 
         if (kidWord === correctWord) {
+          let points = parseInt(localStorage.getItem("points")) || 0;
+          points += 1;
+          localStorage.setItem("points", points);
           solutionLetterSlots.forEach((slot) => {
             slot.style.backgroundColor = "#a8e6a3"; // hier lieber das Konfetti verwenden oder Umrandung grün färben, wie bei Melas Spiel?
           });
