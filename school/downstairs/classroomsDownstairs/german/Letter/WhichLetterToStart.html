@@ -206,6 +206,9 @@
 
             btn.onclick = () => {
               if (letter === correctLetter) {
+                let points = parseInt(localStorage.getItem("points")) || 0;
+                points += 1;
+                localStorage.setItem("points", points);
                 btn.style.borderColor = "lime";
                 btn.style.transition = " border 0.3s ease";
                 setTimeout(() => {

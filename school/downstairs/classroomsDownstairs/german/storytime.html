@@ -171,6 +171,9 @@
         const correctAnswer = tales[currentIndex].name.toLowerCase();
 
         if (userAnswer === correctAnswer) {
+          let points = parseInt(localStorage.getItem("points")) || 0;
+          points += 1;
+          localStorage.setItem("points", points);
           answerInput.style.borderColor = "green";
           // kurze Rückmeldung, dann neue Geschichte zeigen und Eingabe zurücksetzen
           setTimeout(() => {
