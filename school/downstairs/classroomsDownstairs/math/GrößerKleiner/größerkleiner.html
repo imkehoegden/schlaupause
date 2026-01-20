@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Buchstabensalat</title>
+    <title>Größer Kleiner</title>
 
     <style>
       body {
@@ -191,24 +191,39 @@
       <button id="undo-btn">⬅️</button>
     </main>
     <script>
-      // Wörter festlegen
-
-      const words = [
-        { letters: ["B", "L", "U", "M", "E"], icon: "🌸" },
-        { letters: ["T", "A", "S", "S", "E"], icon: "☕" },
-        { letters: ["F", "I", "S", "C", "H"], icon: "🐟" },
-        { letters: ["Z", "E", "B", "R", "A"], icon: "🦓" },
-        { letters: ["S", "C", "H", "A", "F"], icon: "🐑" },
-        { letters: ["V", "O", "G", "E", "L"], icon: "🐦" },
-        { letters: ["K", "A", "T", "Z", "E"], icon: "🐱" },
-        { letters: ["A", "P", "F", "E", "L"], icon: "🍎" },
-        { letters: ["H", "O", "N", "I", "G"], icon: "🍯" },
-        { letters: ["R", "E", "G", "A", "L"], icon: "🗄️" },
-        { letters: ["K", "U", "G", "E", "L"], icon: "⚽" },
-        { letters: ["R", "A", "D", "I", "O"], icon: "📻" },
-        { letters: ["W", "O", "L", "K", "E"], icon: "☁️" },
-        { letters: ["S", "T", "U", "H", "L"], icon: "🪑" },
-      ]; // evtl. noch mit Varibler Wordlänge?
+      // Nummern-Paare festlegen
+      const numbers = [
+        { left: 5, right: 3 },
+        { left: 7, right: 9 },
+        { left: 4, right: 4 },
+        { left: 12, right: 8 },
+        { left: 6, right: 10 },
+        { left: 15, right: 15 },
+        { left: 1, right: 7 },
+        { left: 9, right: 2 },
+        { left: 11, right: 11 },
+        { left: 14, right: 16 },
+        { left: 3, right: 3 },
+        { left: 8, right: 12 },
+        { left: 7, right: 5 },
+        { left: 10, right: 10 },
+        { left: 6, right: 4 },
+        { left: 13, right: 17 },
+        { left: 2, right: 2 },
+        { left: 18, right: 9 },
+        { left: 5, right: 6 },
+        { left: 7, right: 7 },
+        { left: 12, right: 14 },
+        { left: 3, right: 1 },
+        { left: 8, right: 8 },
+        { left: 9, right: 11 },
+        { left: 4, right: 4 },
+        { left: 16, right: 13 },
+        { left: 2, right: 5 },
+        { left: 10, right: 7 },
+        { left: 15, right: 15 },
+        { left: 6, right: 9 },
+      ];
 
       // DOM Elemente holen
       const bowlLettersContainer = document.querySelector(".salad-letters");
