@@ -56,12 +56,13 @@
         top: 40%;
         left: 50%;
         transform: translate(-50%, -50%);
+      }
+
+      .numbers-inner {
         display: flex;
-        align-items: center;
         gap: 40px;
         font-size: 80px;
         color: white;
-        z-index: 2;
       }
 
       #left-number,
@@ -134,9 +135,11 @@
         />
 
         <div class="numbers-container">
-          <div id="left-number"></div>
-          <div id="comparison-sign">?</div>
-          <div id="right-number"></div>
+          <div class="numbers-inner">
+            <div id="left-number"></div>
+            <div id="comparison-sign">?</div>
+            <div id="right-number"></div>
+          </div>
         </div>
       </div>
 
@@ -162,7 +165,6 @@
         { left: 3, right: 3 },
         { left: 8, right: 12 },
         { left: 7, right: 5 },
-        { left: 10, right: 10 },
         { left: 6, right: 4 },
         { left: 13, right: 17 },
         { left: 2, right: 2 },
@@ -184,7 +186,7 @@
       // DOM Elemente holen
       const backButton = document.getElementById("backBtn");
 
-      const numbersContainer = document.querySelector(".numbers-container");
+      const numbersContainer = document.querySelector(".numbers-inner");
 
       const leftNumberContainer = document.getElementById("left-number");
       const rightNumberContainer = document.getElementById("right-number");
@@ -215,12 +217,10 @@
 
         const numberLeftSpan = document.createElement("span");
         numberLeftSpan.textContent = numberLeft;
-        numberLeftSpan.classList.add("number-span");
         leftNumberContainer.appendChild(numberLeftSpan);
 
         const numberRightSpan = document.createElement("span");
         numberRightSpan.textContent = numberRight;
-        numberRightSpan.classList.add("number-span");
         rightNumberContainer.appendChild(numberRightSpan);
       }
 
@@ -241,6 +241,9 @@
         } else {
           numbersContainer.classList.add("shake");
         }
+        setTimeout(() => {
+          comparisonSignContainer.textContent = "?";
+        }, 700);
         setTimeout(() => {
           numbersContainer.classList.remove("shake");
         }, 1000);
