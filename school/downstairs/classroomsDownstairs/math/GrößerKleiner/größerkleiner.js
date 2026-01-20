@@ -55,12 +55,12 @@ function getRandomNumberPair() {
 }
 
 // Funktion 2: Nummern anzeigen, also DOM-Elemente für Zahl links und Zahl rechts erzeugen
-function showNumberPair(numberLeft, numberRight) {
+function showNumberPair() {
   leftNumberContainer.innerHTML = "";
   rightNumberContainer.innerHTML = "";
 
-  numberLeft = currentNumberPair.left;
-  numberRight = currentNumberPair.right;
+  const numberLeft = currentNumberPair.left;
+  const numberRight = currentNumberPair.right;
 
   const numberLeftSpan = document.createElement("span");
   numberLeftSpan.textContent = numberLeft;
@@ -69,12 +69,8 @@ function showNumberPair(numberLeft, numberRight) {
 
   const numberRightSpan = document.createElement("span");
   numberRightSpan.textContent = numberRight;
-  numberLeftSpan.classList.add("number-span");
+  numberRightSpan.classList.add("number-span");
   rightNumberContainer.appendChild(numberRightSpan);
-
-  if ((comparisonSignContainer.textContent = ">" || "<" || "=")) {
-    setTimeout(checkKidSolutionAndGiveFeedback, 1000);
-  }
 }
 
 // Funktion 3: Lösung des Kindes überprüfen, ob richtig oder falsch
@@ -94,26 +90,40 @@ function checkKidSolutionAndGiveFeedback() {
   } else {
     numbersContainer.classList.add("shake");
   }
-  setTimeout(numbersContainer.classList.remove("shake"), 1000);
+  setTimeout(() => {
+    numbersContainer.classList.remove("shake");
+  }, 1000);
 }
 
 // Funktion 4: neues Nummern-Paar anzeigen
 function showNextNumberPair() {
   currentNumberPair = getRandomNumberPair();
   showNumberPair();
+
+  comparisonSignContainer.textContent = "?";
+
+  leftNumberContainer.style.backgroundColor = "";
+  rightNumberContainer.style.backgroundColor = "";
+  comparisonSignContainer.style.backgroundColor = "";
 }
 
 showNumberPair();
 
-// Eventlistener für Buttons
+// Eventlistener für Buttons // erst hier Entscheidung prüfen
 greaterButton.addEventListener("click", () => {
   comparisonSignContainer.textContent = ">";
+  kidSelectedSign = ">";
+  setTimeout(checkKidSolutionAndGiveFeedback, 500);
 });
 lessButton.addEventListener("click", () => {
   comparisonSignContainer.textContent = "<";
+  kidSelectedSign = "<";
+  setTimeout(checkKidSolutionAndGiveFeedback, 500);
 });
 equalButton.addEventListener("click", () => {
   comparisonSignContainer.textContent = "=";
+  kidSelectedSign = "=";
+  setTimeout(checkKidSolutionAndGiveFeedback, 500);
 });
 
 backButton.onclick = () => {
