@@ -30,6 +30,21 @@
         color: white;
         z-index: 1000;
       }
+      @keyframes blinkRedBorder {
+        0% {
+          border-color: red;
+        }
+        50% {
+          border-color: transparent;
+        }
+        100% {
+          border-color: red;
+        }
+      }
+
+      .points-error {
+        animation: blinkRedBorder 0.4s ease-in-out 3;
+      }
 
       .overlay-img {
         position: absolute;
@@ -109,7 +124,7 @@
   </head>
 
   <body>
-    <div id="points">
+    <div id="points" title="Verdiene dir in der Schule Punkte"">
       <p>Punkte: <span id="pointsDisplay">0</span></p>
     </div>
     <div class="container">
@@ -161,7 +176,11 @@
         let points = parseInt(localStorage.getItem("points")) || 0;
 
         if (points < 10) {
-          alert("Du brauchst 10 Punkte, um das Spiel zu spielen!");
+          const pointsDiv = document.getElementById("points");
+          pointsDiv.classList.remove("points-error");
+          void pointsDiv.offsetWidth; // kann jetzt so oft ausgeführt werden wie gewünscht
+          pointsDiv.classList.add("points-error");
+
           return; // Spiel kann nicht gestartet werden
         }
 
