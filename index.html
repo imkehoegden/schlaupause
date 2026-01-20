@@ -145,9 +145,11 @@
       const door = document.getElementById("door");
       const overlayImg = document.querySelector(".overlay-img");
       const ball = document.getElementById("ball");
+
       let totalPoints = parseInt(localStorage.getItem("points")) || 0;
       const pointsDisplay = document.getElementById("pointsDisplay");
       pointsDisplay.textContent = totalPoints;
+
       door.addEventListener("click", (event) => {
         overlayImg.classList.add("active");
 
