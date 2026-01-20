@@ -201,7 +201,7 @@
       let kidSelectedSign;
       let currentNumberPair = getRandomNumberPair();
 
-      // Funktion 1: Nummern-Paar aus numbersArray holen
+      // Funktion 1: random Nummern-Paar aus numbersArray holen
       function getRandomNumberPair() {
         const randomIndex = Math.floor(Math.random() * numbers.length);
         return numbers[randomIndex];
@@ -259,9 +259,9 @@
         leftNumberContainer.style.backgroundColor = "";
         rightNumberContainer.style.backgroundColor = "";
         comparisonSignContainer.style.backgroundColor = "";
-      }
 
-      showNumberPair();
+        kidSelectedSign = null;
+      }
 
       // Eventlistener für Buttons // erst hier Entscheidung prüfen
       greaterButton.addEventListener("click", () => {
@@ -283,6 +283,11 @@
       backButton.onclick = () => {
         window.location.href = "../mathClassroom.html";
       };
+
+      // Spiel startet
+      document.addEventListener("DOMContentLoaded", () => {
+        showNumberPair();
+      });
     </script>
   </body>
 </html>
