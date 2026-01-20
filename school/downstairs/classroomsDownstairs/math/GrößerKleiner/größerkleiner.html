@@ -18,6 +18,7 @@
         color: white;
         cursor: pointer;
         z-index: 1000;
+        transition: transform 0.15s ease;
       }
 
       #backBtn:hover {
@@ -63,8 +64,18 @@
         z-index: 2;
       }
 
-      .bowl-letter:hover {
-        transform: scale(1.1);
+      #left-number,
+      #comparison-sign,
+      #right-number {
+        width: 60px;
+        height: 60px;
+        border-radius: 5px;
+        border: 2px dashed white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 40px;
+        font-weight: bold;
       }
 
       .buttons {

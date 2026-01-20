@@ -32,17 +32,20 @@ const numbers = [
 ];
 
 // DOM Elemente holen
+const backButton = document.getElementById("backBtn");
+
 const numbersContainer = document.querySelector(".numbers-container");
+
 const leftNumberContainer = document.getElementById("left-number");
 const rightNumberContainer = document.getElementById("right-number");
+const comparisonSignContainer = document.getElementById("comparison-sign");
+
 const greaterButton = document.getElementById("greater-btn");
 const lessButton = document.getElementById("less-btn");
 const equalButton = document.getElementById("equal-btn");
-const comparisonSign = document.getElementById("comparison-sign");
 
-// Variable für Spielzustand
-
-let kidSelectedSign = "";
+// Variablen für Spielzustand
+let kidSelectedSign;
 let currentNumberPair = getRandomNumberPair();
 
 // Funktion 1: Nummern-Paar aus numbersArray holen
@@ -52,7 +55,6 @@ function getRandomNumberPair() {
 }
 
 // Funktion 2: Nummern anzeigen, also DOM-Elemente für Zahl links und Zahl rechts erzeugen
-
 function showNumberPair(numberLeft, numberRight) {
   leftNumberContainer.innerHTML = "";
   rightNumberContainer.innerHTML = "";
@@ -69,91 +71,51 @@ function showNumberPair(numberLeft, numberRight) {
   numberRightSpan.textContent = numberRight;
   numberLeftSpan.classList.add("number-span");
   rightNumberContainer.appendChild(numberRightSpan);
+
+  if ((comparisonSignContainer.textContent = ">" || "<" || "=")) {
+    setTimeout(checkKidSolutionAndGiveFeedback, 1000);
+  }
+}
+
+// Funktion 3: Lösung des Kindes überprüfen, ob richtig oder falsch
+function checkKidSolutionAndGiveFeedback() {
+  if (
+    (currentNumberPair.left > currentNumberPair.right &&
+      kidSelectedSign === ">") ||
+    (currentNumberPair.left < currentNumberPair.right &&
+      kidSelectedSign === "<") ||
+    (currentNumberPair.left === currentNumberPair.right &&
+      kidSelectedSign === "=")
+  ) {
+    leftNumberContainer.style.backgroundColor = "#a8e6a3";
+    rightNumberContainer.style.backgroundColor = "#a8e6a3";
+    comparisonSignContainer.style.backgroundColor = "#a8e6a3";
+    setTimeout(showNextNumberPair, 1000);
+  } else {
+    numbersContainer.classList.add("shake");
+  }
+  setTimeout(numbersContainer.classList.remove("shake"), 1000);
+}
+
+// Funktion 4: neues Nummern-Paar anzeigen
+function showNextNumberPair() {
+  currentNumberPair = getRandomNumberPair();
+  showNumberPair();
 }
 
 showNumberPair();
 
-// Eventlistener für Vergleichsbuttons
-
+// Eventlistener für Buttons
 greaterButton.addEventListener("click", () => {
-  comparisonSign.textContent = ">";
+  comparisonSignContainer.textContent = ">";
 });
 lessButton.addEventListener("click", () => {
-  comparisonSign.textContent = "<";
+  comparisonSignContainer.textContent = "<";
 });
 equalButton.addEventListener("click", () => {
-  comparisonSign.textContent = "=";
+  comparisonSignContainer.textContent = "=";
 });
 
-function checkKidSolutionAndGiveFeedback() {
-  if (kidWord === correctWord) {
-    solutionLetterSlots.forEach((slot) => {
-      slot.style.backgroundColor = "#a8e6a3"; // hier lieber das Konfetti verwenden oder Umrandung grün färben, wie bei Melas Spiel?
-    });
-    setTimeout(showNextWord, 1000);
-  } else {
-    solutionLetterSlots.forEach((slot) => {
-      slot.classList.add("shake");
-    });
-
-    // Die Shake-Animation wird per Klassenvergabe, also in CSS ausgelöst. Die Klasse muss nach Ablauf entfernt werden, damit die Animation bei einem erneuten Fehler wieder abgespielt werden kann.
-    setTimeout(() => {
-      solutionLetterSlots.forEach((slot) => slot.classList.remove("shake"));
-    }, 500);
-  }
-}
-
-/*
-// Funktion 5: Slots des Lösungsworts aktualisieren
-// Synchronisiert die gewählten Buchstaben mit der Darstellung der Lösungsslots
-function updateSolutionSlots() {
-  solutionLetterSlots.forEach((slot, i) => {
-    slot.textContent = kidSelectedLetters[i] || "_";
-    slot.style.backgroundColor = "";
-  });
-}
-
-// Funktion 6: neues Wort anzeigen
-function showNextWord() {
-  currentWordObject = getRandomWord();
-  targetWordLetters = currentWordObject.letters;
-  shuffledBowlLetters = shuffleLetters(targetWordLetters);
-  kidSelectedLetters = [];
-  updateSolutionSlots();
-  showWordInBowl(shuffledBowlLetters);
-}
-
-// Eventlistener
-undoButton.addEventListener("click", () => {
-  if (kidSelectedLetters.length === 0) return; // Undo ist nur möglich, wenn mindestens ein Buchstabe gewählt wurde.
-
-  const lastLetter = kidSelectedLetters.pop(); // entfernt letzten Buchstaben des "Stapels" // Array-Methode .pop() entfernt das letzte Element eines Arrays, gibt es zurück, verändert Array also
-  updateSolutionSlots();
-
-  // Buchstabe zurück in die Bowl legen
-  const letterSpan = document.createElement("span");
-  letterSpan.textContent = lastLetter;
-  letterSpan.classList.add("bowl-letter");
-
-  // Wieder Klick-Funktion hinzufügen
-  letterSpan.addEventListener("click", () => {
-    kidSelectedLetters.push(lastLetter);
-    updateSolutionSlots();
-
-    letterSpan.remove();
-    if (kidSelectedLetters.length === targetWordLetters.length) {
-      checkKidSolutionAndGiveFeedback();
-    }
-  });
-
-  bowlLettersContainer.appendChild(letterSpan);
-  // console.log("Buchstabe wurde entfernt");
-});
-
-const backButton = document.getElementById("backBtn");
 backButton.onclick = () => {
-  window.location.href = "./buchstabensalatauswahl.html";
+  window.location.href = "../mathClassroom.html";
 };
-
-updateSolutionSlots();
-showWordInBowl(shuffledBowlLetters);*/
