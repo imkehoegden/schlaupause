@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Größer Kleiner</title>
+
+    <style>
+      #backBtn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        padding: 10px 18px;
+        font-size: 20px;
+        border-radius: 10px;
+        border: 3px solid white;
+        background: rgba(0, 0, 0, 0.4);
+        color: white;
+        cursor: pointer;
+        z-index: 1000;
+        transition: transform 0.15s ease;
+      }
+
+      #backBtn:hover {
+        transform: scale(1.1);
+      }
+
+      main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+      }
+
+      .container {
+        position: relative;
+        flex: 1;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 0;
+      }
+
+      .container img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+      }
+
+      .numbers-container {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .numbers-inner {
+        display: flex;
+        gap: 40px;
+        font-size: 80px;
+        color: white;
+      }
+
+      #left-number,
+      #comparison-sign,
+      #right-number {
+        width: 60px;
+        height: 60px;
+        border-radius: 5px;
+        border: 2px dashed white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 40px;
+        font-weight: bold;
+      }
+
+      .buttons {
+        margin-bottom: 20px;
+        flex: 0 0 auto;
+      }
+
+      #greater-btn,
+      #less-btn,
+      #equal-btn {
+        font-size: 40px;
+        margin: 0 10px;
+        padding: 10px 20px;
+        border-radius: 10px;
+        border: 3px solid white;
+        background: rgba(0, 0, 0, 0.4);
+        color: white;
+        cursor: pointer;
+        transition: transform 0.15s ease;
+      }
+
+      @keyframes shake {
+        0% {
+          transform: translateX(0);
+        }
+        20% {
+          transform: translateX(-5px);
+        }
+        40% {
+          transform: translateX(5px);
+        }
+        60% {
+          transform: translateX(-5px);
+        }
+        80% {
+          transform: translateX(5px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+
+      .shake {
+        animation: shake 0.5s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <button id="backBtn">← Zurück</button>
+
+      <div class="container">
+        <img
+          src="../../../../../pictures/schlaupause_groesserkleiner_krokodil_2.png"
+          alt="Krokodil auf Wiese liegend mit offenem Maul"
+        />
+
+        <div class="numbers-container">
+          <div class="numbers-inner">
+            <div id="left-number"></div>
+            <div id="comparison-sign">?</div>
+            <div id="right-number"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button id="greater-btn">></button>
+        <button id="less-btn"><</button>
+        <button id="equal-btn">=</button>
+      </div>
+    </main>
+
+    <script>
+      const numbers = [
+        { left: 5, right: 3 },
+        { left: 7, right: 9 },
+        { left: 4, right: 4 },
+        { left: 12, right: 8 },
+        { left: 6, right: 10 },
+        { left: 15, right: 15 },
+        { left: 1, right: 7 },
+        { left: 9, right: 2 },
+        { left: 11, right: 11 },
+        { left: 14, right: 16 },
+        { left: 3, right: 3 },
+        { left: 8, right: 12 },
+        { left: 7, right: 5 },
+        { left: 6, right: 4 },
+        { left: 13, right: 17 },
+        { left: 2, right: 2 },
+        { left: 18, right: 9 },
+        { left: 5, right: 6 },
+        { left: 7, right: 7 },
+        { left: 12, right: 14 },
+        { left: 3, right: 1 },
+        { left: 8, right: 8 },
+        { left: 9, right: 11 },
+        { left: 4, right: 4 },
+        { left: 16, right: 13 },
+        { left: 2, right: 5 },
+        { left: 10, right: 7 },
+        { left: 15, right: 15 },
+        { left: 6, right: 9 },
+      ];
+
+      // DOM Elemente holen
+      const backButton = document.getElementById("backBtn");
+
+      const numbersContainer = document.querySelector(".numbers-inner");
+
+      const leftNumberContainer = document.getElementById("left-number");
+      const rightNumberContainer = document.getElementById("right-number");
+      const comparisonSignContainer =
+        document.getElementById("comparison-sign");
+
+      const greaterButton = document.getElementById("greater-btn");
+      const lessButton = document.getElementById("less-btn");
+      const equalButton = document.getElementById("equal-btn");
+
+      // Variablen für Spielzustand
+      let kidSelectedSign;
+      let currentNumberPair = getRandomNumberPair();
+
+      // Funktion 1: random Nummern-Paar aus numbersArray holen
+      function getRandomNumberPair() {
+        const randomIndex = Math.floor(Math.random() * numbers.length);
+        return numbers[randomIndex];
+      }
+
+      // Funktion 2: Nummern anzeigen, also DOM-Elemente für Zahl links und Zahl rechts erzeugen
+      function showNumberPair() {
+        leftNumberContainer.innerHTML = "";
+        rightNumberContainer.innerHTML = "";
+
+        const numberLeft = currentNumberPair.left;
+        const numberRight = currentNumberPair.right;
+
+        const numberLeftSpan = document.createElement("span");
+        numberLeftSpan.textContent = numberLeft;
+        leftNumberContainer.appendChild(numberLeftSpan);
+
+        const numberRightSpan = document.createElement("span");
+        numberRightSpan.textContent = numberRight;
+        rightNumberContainer.appendChild(numberRightSpan);
+      }
+
+      // Funktion 3: Lösung des Kindes überprüfen, ob richtig oder falsch
+      function checkKidSolutionAndGiveFeedback() {
+        if (
+          (currentNumberPair.left > currentNumberPair.right &&
+            kidSelectedSign === ">") ||
+          (currentNumberPair.left < currentNumberPair.right &&
+            kidSelectedSign === "<") ||
+          (currentNumberPair.left === currentNumberPair.right &&
+            kidSelectedSign === "=")
+        ) {
+          leftNumberContainer.style.backgroundColor = "#a8e6a3";
+          rightNumberContainer.style.backgroundColor = "#a8e6a3";
+          comparisonSignContainer.style.backgroundColor = "#a8e6a3";
+          setTimeout(showNextNumberPair, 1000);
+        } else {
+          numbersContainer.classList.add("shake");
+        }
+        setTimeout(() => {
+          comparisonSignContainer.textContent = "?";
+        }, 700);
+        setTimeout(() => {
+          numbersContainer.classList.remove("shake");
+        }, 1000);
+      }
+
+      // Funktion 4: neues Nummern-Paar anzeigen
+      function showNextNumberPair() {
+        currentNumberPair = getRandomNumberPair();
+        showNumberPair();
+
+        comparisonSignContainer.textContent = "?";
+
+        leftNumberContainer.style.backgroundColor = "";
+        rightNumberContainer.style.backgroundColor = "";
+        comparisonSignContainer.style.backgroundColor = "";
+
+        kidSelectedSign = null;
+      }
+
+      // Eventlistener für Buttons // erst hier Entscheidung prüfen
+      greaterButton.addEventListener("click", () => {
+        comparisonSignContainer.textContent = ">";
+        kidSelectedSign = ">";
+        setTimeout(checkKidSolutionAndGiveFeedback, 500);
+      });
+      lessButton.addEventListener("click", () => {
+        comparisonSignContainer.textContent = "<";
+        kidSelectedSign = "<";
+        setTimeout(checkKidSolutionAndGiveFeedback, 500);
+      });
+      equalButton.addEventListener("click", () => {
+        comparisonSignContainer.textContent = "=";
+        kidSelectedSign = "=";
+        setTimeout(checkKidSolutionAndGiveFeedback, 500);
+      });
+
+      backButton.onclick = () => {
+        window.location.href = "../mathClassroom.html";
+      };
+
+      // Spiel startet
+      document.addEventListener("DOMContentLoaded", () => {
+        showNumberPair();
+      });
+    </script>
+  </body>
+</html>

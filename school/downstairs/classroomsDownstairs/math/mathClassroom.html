@@ -344,6 +344,7 @@
       const plusGames = document.getElementById("Plus");
       const minusGames = document.getElementById("Minus");
       const mengenGames = document.getElementById("Mengen");
+      const comparisonGame = document.getElementById("Krokodil");
 
       backButton.addEventListener("click", () => {
         window.location.href = "../../mainDownstairs.html";
@@ -364,6 +365,12 @@
       mengenGames.addEventListener("click", () => {
         setTimeout(() => {
           window.location.href = "./Mengen/mengenZuordnen.html";
+        }, 1000);
+      });
+
+      comparisonGame.addEventListener("click", () => {
+        setTimeout(() => {
+          window.location.href = "./GroesserKleiner/groesserkleiner.html";
         }, 1000);
       });
     </script>
