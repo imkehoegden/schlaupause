@@ -304,6 +304,9 @@
         const correctWord = targetWordLetters.join("");
         //gleich, aber jetzt dynamisch für variable Wortlänge
         if (kidWord === correctWord) {
+          let points = parseInt(localStorage.getItem("points")) || 0;
+          points += 1;
+          localStorage.setItem("points", points);
           solutionLetterSlots.forEach((slot) => {
             slot.style.backgroundColor = "#a8e6a3";
           });

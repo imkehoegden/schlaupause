@@ -18,6 +18,18 @@
         height: auto;
         display: block;
       }
+      #points {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 0px 18px;
+        font-size: 20px;
+        border-radius: 10px;
+        border: 3px solid white;
+        background: rgba(0, 0, 0, 0.4);
+        color: white;
+        z-index: 1000;
+      }
 
       .overlay-img {
         position: absolute;
@@ -97,6 +109,9 @@
   </head>
 
   <body>
+    <div id="points">
+      <p>Punkte: <span id="pointsDisplay">0</span></p>
+    </div>
     <div class="container">
       <img
         src="./pictures/schlaupause_schulhaus_gross.png"
@@ -130,6 +145,10 @@
       const door = document.getElementById("door");
       const overlayImg = document.querySelector(".overlay-img");
       const ball = document.getElementById("ball");
+
+      let totalPoints = parseInt(localStorage.getItem("points")) || 0;
+
+      document.getElementById("pointsDisplay").textContent = totalPoints;
 
       door.addEventListener("click", (event) => {
         overlayImg.classList.add("active");
