@@ -38,13 +38,14 @@ const rightNumberContainer = document.getElementById("right-number");
 const greaterButton = document.getElementById("greater-btn");
 const lessButton = document.getElementById("less-btn");
 const equalButton = document.getElementById("equal-btn");
+const comparisonSign = document.getElementById("comparison-sign");
 
 // Variable für Spielzustand
 
 let kidSelectedSign = "";
 let currentNumberPair = getRandomNumberPair();
 
-// Funktion 1: wähle random Nummern-Paar aus numbersArray
+// Funktion 1: Nummern-Paar aus numbersArray holen
 function getRandomNumberPair() {
   const randomIndex = Math.floor(Math.random() * numbers.length);
   return numbers[randomIndex];
@@ -61,20 +62,30 @@ function showNumberPair(numberLeft, numberRight) {
 
   const numberLeftSpan = document.createElement("span");
   numberLeftSpan.textContent = numberLeft;
+  numberLeftSpan.classList.add("number-span");
   leftNumberContainer.appendChild(numberLeftSpan);
 
   const numberRightSpan = document.createElement("span");
   numberRightSpan.textContent = numberRight;
+  numberLeftSpan.classList.add("number-span");
   rightNumberContainer.appendChild(numberRightSpan);
 }
 
 showNumberPair();
-/*
-// Funktion 4: Wort überprüfen, ob richtig oder falsch
-function checkKidSolutionAndGiveFeedback() {
-  const kidWord = kidSelectedLetters.join("");
-  const correctWord = targetWordLetters.join("");
 
+// Eventlistener für Vergleichsbuttons
+
+greaterButton.addEventListener("click", () => {
+  comparisonSign.textContent = ">";
+});
+lessButton.addEventListener("click", () => {
+  comparisonSign.textContent = "<";
+});
+equalButton.addEventListener("click", () => {
+  comparisonSign.textContent = "=";
+});
+
+function checkKidSolutionAndGiveFeedback() {
   if (kidWord === correctWord) {
     solutionLetterSlots.forEach((slot) => {
       slot.style.backgroundColor = "#a8e6a3"; // hier lieber das Konfetti verwenden oder Umrandung grün färben, wie bei Melas Spiel?
@@ -92,6 +103,7 @@ function checkKidSolutionAndGiveFeedback() {
   }
 }
 
+/*
 // Funktion 5: Slots des Lösungsworts aktualisieren
 // Synchronisiert die gewählten Buchstaben mit der Darstellung der Lösungsslots
 function updateSolutionSlots() {
