@@ -171,9 +171,9 @@
         const correctAnswer = tales[currentIndex].name.toLowerCase();
 
         if (userAnswer === correctAnswer) {
-          let points = parseInt(localStorage.getItem("points")) || 0;
-          points += 1;
-          localStorage.setItem("points", points);
+          let points = parseInt(localStorage.getItem("points")) || 0; // Punkte aus localStorage holen
+          points += 1; // Punkt hinzufügen, wenn die Antwort richtig ist
+          localStorage.setItem("points", points); // Punkte zurück in localStorage speichern
           answerInput.style.borderColor = "green";
           // kurze Rückmeldung, dann neue Geschichte zeigen und Eingabe zurücksetzen
           setTimeout(() => {

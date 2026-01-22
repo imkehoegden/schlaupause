@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Minusaufgaben</title>
+    <script src="./minusaufgabenauswahl.js" defer></script>
     <style>
       body {
         position: relative;
@@ -69,24 +70,5 @@
     <button id="minusBis10">Minus bis 10</button>
     <button id="minusBis20">Minus bis 20</button>
     <button id="minusBis20oZ">Minus bis 20 leichter</button>
-
-    <script>
-      const backButton = document.getElementById("backBtn");
-      backButton.onclick = () => {
-        window.location.href = "../mathClassroom.html";
-      };
-      const minusBis10Button = document.getElementById("minusBis10");
-      minusBis10Button.onclick = () => {
-        window.location.href = "./minusBis10.html";
-      };
-      const minusBis20Button = document.getElementById("minusBis20");
-      minusBis20Button.onclick = () => {
-        window.location.href = "./minusBis20.html";
-      };
-      const minusBis20oZButton = document.getElementById("minusBis20oZ");
-      minusBis20oZButton.onclick = () => {
-        window.location.href = "./minusBis20OhneZehnerübergang.html";
-      };
-    </script>
   </body>
 </html>
