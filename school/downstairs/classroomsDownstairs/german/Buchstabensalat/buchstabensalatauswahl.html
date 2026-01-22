@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Buchstabensalate</title>
+
+    <script src="buchstabensalatauswahl.js" defer></script>
+
     <style>
       body {
         position: relative;
@@ -66,22 +69,5 @@
     />
     <button id="buchstabensalat">Buchstabensalat leicht</button>
     <button id="buchstabensalatVarialeWortlänge">Buchstabensalat schwer</button>
-
-    <script>
-      const backButton = document.getElementById("backBtn");
-      backButton.onclick = () => {
-        window.location.href = "../germanClassroom.html";
-      };
-      const minusBis10Button = document.getElementById("buchstabensalat");
-      minusBis10Button.onclick = () => {
-        window.location.href = "./buchstabensalat.html";
-      };
-      const minusBis20Button = document.getElementById(
-        "buchstabensalatVarialeWortlänge",
-      );
-      minusBis20Button.onclick = () => {
-        window.location.href = "./buchstabensalatVariableWortlänge.html";
-      };
-    </script>
   </body>
 </html>
