@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Im Schulhaus</title>
+    <script src="./mainDownstairs.js" defer></script>
     <style>
       .container {
         /* Containergröße = Bildgröße. Sonst waren die clickable Elements nicht zu positionieren */
@@ -101,36 +102,5 @@
         <button id="Deutschtür"></button>
       </div>
     </div>
-    <script>
-      const backButton = document.getElementById("backBtn");
-      backButton.onclick = () => {
-        window.location.href = "../../index.html";
-      };
-      const mathdoor = document.getElementById("Mathetür");
-      const germandoor = document.getElementById("Deutschtür");
-
-      const defaultImg = document.getElementById("default");
-      const mathImg = document.getElementById("math");
-      const germanImg = document.getElementById("german");
-
-      mathdoor.onclick = () => {
-        defaultImg.style.opacity = 0;
-        germanImg.style.opacity = 0;
-        mathImg.style.opacity = 1;
-        setTimeout(() => {
-          window.location.href =
-            "./classroomsDownstairs/math/mathClassroom.html";
-        }, 1000);
-      };
-      germandoor.onclick = () => {
-        defaultImg.style.opacity = 0;
-        mathImg.style.opacity = 0;
-        germanImg.style.opacity = 1;
-        setTimeout(() => {
-          window.location.href =
-            "./classroomsDownstairs/german/germanClassroom.html";
-        }, 1000);
-      };
-    </script>
   </body>
 </html>
