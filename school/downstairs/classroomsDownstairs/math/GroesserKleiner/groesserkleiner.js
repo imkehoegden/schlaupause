@@ -80,6 +80,10 @@ function checkKidSolutionAndGiveFeedback() {
     (currentNumberPair.left === currentNumberPair.right &&
       kidSelectedSign === "=")
   ) {
+    let points = parseInt(localStorage.getItem("points")) || 0;
+    points += 1;
+    localStorage.setItem("points", points);
+
     leftNumberContainer.style.backgroundColor = "#a8e6a3";
     rightNumberContainer.style.backgroundColor = "#a8e6a3";
     comparisonSignContainer.style.backgroundColor = "#a8e6a3";
