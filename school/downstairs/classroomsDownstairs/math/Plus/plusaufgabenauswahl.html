@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Plusaufgaben</title>
+    <script src="./plusaufgabenauswahl.js" defer></script>
     <style>
       body {
         position: relative;
@@ -63,20 +64,5 @@
     <img src="../../../../../pictures/Tafel.jpeg" alt="" />
     <button id="plusBis10">Plus bis 10</button>
     <button id="plusBis20">Plus bis 20</button>
-
-    <script>
-      const backButton = document.getElementById("backBtn");
-      backButton.onclick = () => {
-        window.location.href = "../mathClassroom.html";
-      };
-      const plusBis10Button = document.getElementById("plusBis10");
-      plusBis10Button.onclick = () => {
-        window.location.href = "./plusBis10.html";
-      };
-      const plusBis20Button = document.getElementById("plusBis20");
-      plusBis20Button.onclick = () => {
-        window.location.href = "./plusBis20.html";
-      };
-    </script>
   </body>
 </html>
