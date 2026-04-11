@@ -8,13 +8,21 @@
 
     <style>
       body {
-        position: relative;
+        /* position: relative; */
         margin: 0;
         height: 100vh;
         font-family: Grundschrift, sans-serif;
-        display: flex;
-        flex-wrap: wrap;
+        /* display: flex;
+        flex-wrap: wrap; */
       }
+
+      .container {
+        max-width: 1400px;
+        position: relative;
+        margin: 0 auto;
+        aspect-ratio: 3 / 2;
+      }
+      /* 
       img {
         position: absolute;
         top: 0;
@@ -22,6 +30,12 @@
         margin: 0 auto;
         width: 100%;
         height: 100%;
+      } */
+
+      img {
+        margin: 0 auto;
+        width: 100%;
+        /* height: 100%; */
       }
 
       #backBtn {
@@ -38,6 +52,10 @@
         z-index: 1000;
       }
 
+      #backBtn:hover {
+        transform: scale(1.1);
+      }
+
       #story {
         position: absolute;
         top: 20%;
@@ -49,6 +67,7 @@
         height: 55%;
         overflow: scroll;
       }
+
       #right {
         position: absolute;
         top: 30%;
@@ -58,9 +77,9 @@
         align-items: center;
         width: 30%;
       }
-      input {
-        font-size: 1.3rem;
 
+      input {
+        font-size: 1.4rem;
         width: fit-content;
         border-radius: 10px;
         border: 2px solid #020202;
@@ -92,20 +111,22 @@
   </head>
 
   <body>
-    <h1>📖 Welches Märchen ist das?</h1>
-    <button id="backBtn">← Zurück</button>
-    <img
-      src="../../../../../pictures/Märchenbuch.jpeg"
-      alt="Illustration eines Märchenbuchs"
-    />
+    <div class="container">
+      <!-- <h1>📖 Welches Märchen ist das?</h1> -->
+      <button id="backBtn">← Zurück</button>
+      <img
+        src="../../../../../pictures/Märchenbuch.jpeg"
+        alt="Illustration eines Märchenbuchs"
+      />
 
-    <div id="story"></div>
+      <div id="story"></div>
 
-    <div id="right">
-      <input id="answer" type="text" placeholder="Wie heißt das Märchen?" />
-      <button id="checkBtn">✅</button>
+      <div id="right">
+        <input id="answer" type="text" placeholder="Wie heißt das Märchen?" />
+        <button id="checkBtn">✅</button>
+      </div>
+
+      <canvas id="confetti"></canvas>
     </div>
-
-    <canvas id="confetti"></canvas>
   </body>
 </html>
