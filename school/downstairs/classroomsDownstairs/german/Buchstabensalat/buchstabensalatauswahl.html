@@ -14,6 +14,15 @@
         height: 100vh;
         overflow: hidden;
       }
+
+      .container {
+        /* Containergröße = Bildgröße. Sonst waren die clickable Elements nicht zu positionieren */
+        max-width: 1400px;
+        position: relative;
+        margin: 0 auto;
+        aspect-ratio: 3 / 2; /* damit der Container skalierbar und die Overlays korrekt bleiben. */
+      }
+
       img {
         position: absolute;
         top: 0;
@@ -37,12 +46,16 @@
         z-index: 1000;
       }
 
+      #backBtn:hover {
+        transform: scale(1.1);
+      }
+
       #buchstabensalat,
       #buchstabensalatVarialeWortlänge {
         border: dashed rgb(84, 138, 173) 3px;
         border-radius: 12px;
         position: absolute;
-        left: calc(50vw - 15vw);
+        left: calc(40vw - 18vw);
         width: 30vw;
         height: 10vh;
         padding: 2vh 4vw;
@@ -53,21 +66,25 @@
       }
 
       #buchstabensalat {
-        top: 35%;
+        top: 37%;
       }
 
       #buchstabensalatVarialeWortlänge {
-        top: 55%;
+        top: 52%;
       }
     </style>
   </head>
   <body>
-    <button id="backBtn">← Zurück</button>
-    <img
-      src="../../../../../pictures/schlaupause_deutsch_salatschüssel_hintergrund-img.png"
-      alt=""
-    />
-    <button id="buchstabensalat">Buchstabensalat leicht</button>
-    <button id="buchstabensalatVarialeWortlänge">Buchstabensalat schwer</button>
+    <div class="container">
+      <button id="backBtn">← Zurück</button>
+      <img
+        src="../../../../../pictures/schlaupause_deutsch_salatschüssel_hintergrund-img.png"
+        alt=""
+      />
+      <button id="buchstabensalat">Buchstabensalat leicht</button>
+      <button id="buchstabensalatVarialeWortlänge">
+        Buchstabensalat schwer
+      </button>
+    </div>
   </body>
 </html>
