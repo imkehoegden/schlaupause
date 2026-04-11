@@ -12,6 +12,7 @@ Die Website bietet spielerische Möglichkeiten, Buchstaben zu entdecken, zu lese
 - Responsive – funktioniert auf Desktop, Tablet und Mobile
 - Dynamische Inhalte, generiert durch JavaScript-Spielelogik
 - Spielerisches Design, angepasst für ein junge User:innen
+- insbesondere geeignet für Tablet- und Desktopnutzung
 
 ---
 
