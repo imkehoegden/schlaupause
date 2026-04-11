@@ -10,6 +10,14 @@
         margin: 0;
         height: 100vh;
       }
+
+      .container {
+        max-width: 1400px;
+        position: relative;
+        margin: 0 auto;
+        aspect-ratio: 3 / 2;
+      }
+
       #board {
         position: absolute;
         top: 20%;
@@ -17,6 +25,7 @@
         width: 80%;
         height: 55%;
       }
+
       img {
         margin: 0 auto;
         width: 100%;
@@ -82,6 +91,7 @@
         transform: scale(1.1);
         background: rgba(255, 255, 255, 0.4);
       }
+
       #backBtn {
         position: fixed;
         top: 20px;
@@ -102,11 +112,13 @@
     </style>
   </head>
   <body>
-    <button id="backBtn">← Zurück</button
-    ><img src="../../../../../pictures/Tafel.jpeg" alt="" />
-    <div id="board">
-      <div id="question">?</div>
-      <button id="removeBtn">- 🍎</button>
+    <div class="container">
+      <button id="backBtn">← Zurück</button>
+      <img src="../../../../../pictures/Tafel.jpeg" alt="" />
+      <div id="board">
+        <div id="question">?</div>
+        <button id="removeBtn">- 🍎</button>
+      </div>
     </div>
   </body>
 </html>
