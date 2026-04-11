@@ -12,6 +12,14 @@
         height: 100vh;
         overflow: hidden;
       }
+
+      .container {
+        max-width: 1400px;
+        position: relative;
+        margin: 0 auto;
+        aspect-ratio: 3 / 2;
+      }
+
       img {
         position: absolute;
         top: 0;
@@ -35,13 +43,17 @@
         z-index: 1000;
       }
 
+      #backBtn:hover {
+        transform: scale(1.1);
+      }
+
       #minusBis10,
       #minusBis20,
       #minusBis20oZ {
         border: dashed white 3px;
         border-radius: 12px;
         position: absolute;
-        left: calc(50vw - 15vw);
+        left: calc(40vw - 16vw);
         width: 30vw;
         height: 10vh;
         padding: 2vh 4vw;
@@ -52,11 +64,11 @@
       }
 
       #minusBis10 {
-        top: 25%;
+        top: 29%;
       }
 
       #minusBis20 {
-        top: 65%;
+        top: 61%;
       }
 
       #minusBis20oZ {
@@ -65,10 +77,12 @@
     </style>
   </head>
   <body>
-    <button id="backBtn">← Zurück</button>
-    <img src="../../../../../pictures/Tafel.jpeg" alt="" />
-    <button id="minusBis10">Minus bis 10</button>
-    <button id="minusBis20">Minus bis 20</button>
-    <button id="minusBis20oZ">Minus bis 20 leichter</button>
+    <div class="container">
+      <button id="backBtn">← Zurück</button>
+      <img src="../../../../../pictures/Tafel.jpeg" alt="" />
+      <button id="minusBis10">Minus bis 10</button>
+      <button id="minusBis20">Minus bis 20</button>
+      <button id="minusBis20oZ">Minus bis 20 leichter</button>
+    </div>
   </body>
 </html>
