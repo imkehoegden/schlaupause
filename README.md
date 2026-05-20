@@ -3,6 +3,7 @@
 **Schlaupause** ist eine kleine, interaktive Lernplattform für Grundschüler:innen in Sachsen.  
 Die Website bietet spielerische Möglichkeiten, Buchstaben zu entdecken, zu lesen und Rechnen zu üben. Ideal für Erstklässler:innen und alle, die Lernen mit Spaß verbinden wollen.
 
+
 ---
 
 ## Features
@@ -12,7 +13,7 @@ Die Website bietet spielerische Möglichkeiten, Buchstaben zu entdecken, zu lese
 - Responsive – funktioniert auf Desktop, Tablet und Mobile
 - Dynamische Inhalte, generiert durch JavaScript-Spielelogik
 - Spielerisches Design, angepasst für ein junge User:innen
-- insbesondere geeignet für Tablet- und Desktopnutzung
+- Responsives UI für Desktop und horizontale Tablet-Nutzung
 
 ---
 
